@@ -1,4 +1,5 @@
 import "./App.css";
+import Modal from "./components/Modal";
 import Navbar from "./components/shared/Navbar";
 
 function App() {

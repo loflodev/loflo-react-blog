@@ -21,6 +21,7 @@ export default {
         'light-grey-1': '#EFF0F3',
         'light-grey-2': '#E4E5E9',
         'logo-primary': '#001858',
+        'btn-hover': '#4d7dff',
       }
     },
   },
