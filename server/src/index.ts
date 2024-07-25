@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 import router from "./router";
 
 const app = express();
+const port = 8080 | 3000;
 
 app.use(
   cors({
@@ -20,8 +21,8 @@ app.use(bodyParser.json());
 
 const server = http.createServer(app);
 
-server.listen(8080, () => {
-  console.log("server is running on http://localhost:8080");
+server.listen(port, () => {
+  console.log(`server is running on http://localhost:${port}`);
 });
 
 const MONGO_URL =
