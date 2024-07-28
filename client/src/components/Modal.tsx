@@ -1,12 +1,12 @@
-import { useMemo } from "react";
-import SignIn from "./SignIn";
+import { ReactNode, useMemo } from "react";
 
-interface ModalProps {
+type ModalProps = {
   isModalOpen: boolean;
   onClick: () => void;
+  children: ReactNode;
 }
 
-const Modal = ({ isModalOpen, onClick }: ModalProps) => {
+const Modal = ({ isModalOpen, onClick, children }: ModalProps) => {
   const showModal = useMemo(() => {
     return isModalOpen ? "modal-open" : "";
   }, [isModalOpen]);
@@ -24,7 +24,7 @@ const Modal = ({ isModalOpen, onClick }: ModalProps) => {
               ✕
             </button>
           </form>
-          <SignIn />
+          {children}
 
           {/* <h3 className="font-bold text-lg">Hello!</h3>
           <p className="py-4">Press ESC key or click on ✕ button to close</p> */}

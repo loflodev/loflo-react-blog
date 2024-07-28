@@ -4,12 +4,17 @@ export type InputValidationType = {
   input: string;
 };
 
+export type LoginDetail = {
+  email: string;
+  password: string;
+}
+
 export type Role = "admin" | "suscriber";
 
 export interface User {
   firstName: string;
   lastName: string;
-  email: string;
+  authentication: LoginDetail;
   role: Role;
 }
 

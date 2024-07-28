@@ -1,42 +1,36 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../Button";
 import Modal from "../Modal";
+import Login from "./Login";
+
 
 const Navbar = () => {
-
   const [toggle, setToggle] = useState<boolean>(false);
 
   const handleClick = () => {
     setToggle(!toggle);
-  }
-
-
+  };
   return (
     <div className="bg-light-grey-1">
       <div className="flex justify-between items-center w-[85%] m-auto py-4">
         <div className="logo-container">
-          <a href="" className="logo">
+          <Link to="" className="logo">
             <h1 className="font-semibold text-4xl text-logo-primary leading-5">
               Dasteen.
             </h1>
-          </a>
+          </Link>
         </div>
 
-        <ul className="hidden lg:flex justify-end font-bold text-xl gap-12 grow mr-12">
-          <li>
-            <a href=""></a>Home
-          </li>
-          <li>
-            <a href=""></a>Category
-          </li>
-          <li>
-            <a href=""></a>About Me
-          </li>
-          <li>
-            <a href=""></a>Search
-          </li>
-        </ul>
+        {/* menu for desktop and tablet */}
+        <nav className="hidden lg:flex justify-end font-bold text-xl gap-12 grow mr-12">
+          <Link to="/">Home</Link>
+          <Link to="/category">Category</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/search">Search</Link>
+        </nav>
 
+        {/* menu for mobile */}
         <div className="flex ml-auto">
           <div className="lg:hidden dropdown dropdown-bottom dropdown-end mr-5">
             <div
@@ -59,25 +53,30 @@ const Navbar = () => {
                 />
               </svg>
             </div>
-            <ul
+            <nav
               tabIndex={0}
               className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <a>Homepage</a>
+                <Link to="/">Home</Link>
               </li>
               <li>
-                <a>Portfolio</a>
+                <Link to="/category">Category</Link>
               </li>
               <li>
-                <a>About</a>
+                <Link to="/about">About us</Link>
               </li>
-            </ul>
+              <li>
+                <Link to="/search">Search</Link>
+              </li>
+            </nav>
           </div>
           <Button onClick={handleClick}>Sign in</Button>
+          <Modal isModalOpen={toggle} onClick={handleClick}>
+            <Login />
+          </Modal>
         </div>
       </div>
-      <Modal isModalOpen={toggle} onClick={handleClick} />
     </div>
   );
 };
