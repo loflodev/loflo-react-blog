@@ -1,7 +1,12 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { login } from "../../services/authentication";
+import Modal from "../Modal";
+import Register from "./Register";
+import { HeaderContext } from "./Header";
 
 const SignIn = () => {
+  const { toggle, handleClick } = useContext(HeaderContext);
+
   const [signInForm, setSignInForm] = useState({
     email: "",
     password: "",
@@ -103,12 +108,15 @@ const SignIn = () => {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?
-          <a
-            href="#"
+          <button
+            onClick={handleClick}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             {" " + "Sign up now"}
-          </a>
+          </button>
+          <Modal isModalOpen={toggle} onClick={handleClick}>
+            <Register />
+          </Modal>
         </p>
       </div>
     </div>

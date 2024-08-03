@@ -1,23 +1,21 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
 import Modal from "../Modal";
 import Login from "./Login";
+import { HeaderContext } from "./Header";
+import { useContext } from "react";
 
+const NavBar = () => {
+  const { toggle, handleClick } = useContext(HeaderContext);
 
-const Navbar = () => {
-  const [toggle, setToggle] = useState<boolean>(false);
-
-  const handleClick = () => {
-    setToggle(!toggle);
-  };
+  console.log(toggle)
   return (
     <div className="bg-light-grey-1">
       <div className="flex justify-between items-center w-[85%] m-auto py-4">
         <div className="logo-container">
           <Link to="" className="logo">
             <h1 className="font-semibold text-4xl text-logo-primary leading-5">
-              Dasteen.
+              LofloDev.
             </h1>
           </Link>
         </div>
@@ -81,4 +79,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;
