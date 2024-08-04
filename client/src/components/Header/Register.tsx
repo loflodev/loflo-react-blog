@@ -1,15 +1,54 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
+import { emailChecker, passwordChercker } from "../../helpers";
+import { register } from "../../services/authentication";
+import { HeaderContext } from "./Header";
+
+interface RegisterFormValidation {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  errorMessage: {
+    username: string;
+    email: string;
+    password: string;
+  };
+  inputFocus: {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  };
+}
 
 const Register = () => {
-  const [signInForm, setSignInForm] = useState({
-    userName: "",
+
+  const { setToggle } = useContext(HeaderContext);
+  
+  const [registerForm, setRegisterForm] = useState<RegisterFormValidation>({
+    username: "",
     email: "",
     password: "",
+    confirmPassword: "",
+    errorMessage: {
+      username: "",
+      email: "",
+      password: "",
+    },
+    inputFocus: {
+      username: "ring-gray-300",
+      email: "ring-gray-300",
+      password: "ring-gray-300",
+      confirmPassword: "ring-gray-300",
+    },
   });
 
+  const [canRegister, setCanRegister] = useState<boolean>(false);
+
   const handleSignInForm = (event: ChangeEvent<HTMLInputElement>) => {
-    setSignInForm((prevSignData) => ({
-      ...prevSignData,
+    
+    setRegisterForm((prevData) => ({
+      ...prevData,
       [event.target.name]: event.target.value,
     }));
   };
@@ -17,14 +56,65 @@ const Register = () => {
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event?.preventDefault();
-    // await login(signInForm);
+    event.preventDefault();
 
-    setSignInForm({
-      userName: "",
-      email: "",
-      password: "",
+    const email = emailChecker(registerForm.email);
+    const password = passwordChercker(
+      registerForm.password,
+      registerForm.confirmPassword
+    );
+
+    setRegisterForm((prevData) => {
+      return {
+        ...prevData,
+        errorMessage: {
+          username: prevData.username.length < 3 ? "username is too short" : "",
+          email: !email.isValid ? email.message : "",
+          password: !password.isValid ? password.message : "",
+        },
+        inputFocus: {
+          username:
+            prevData.username.length < 3 ? "ring-red-600" : "ring-gray-300",
+          email: !email.isValid ? "ring-red-600]" : "ring-gray-300",
+          password: !password.isValid ? "ring-red-600" : "ring-gray-300",
+          confirmPassword: !password.isValid ? "ring-red-600" : "ring-gray-300",
+        },
+      };
     });
+
+    setCanRegister(
+      registerForm.username.length > 3 && email.isValid && password.isValid
+    );
+
+    if (canRegister) {
+      await register({
+        username: registerForm.username,
+        authentication: {
+          email: registerForm.email,
+          password: registerForm.password,
+        },
+      });
+
+      setRegisterForm({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        errorMessage: {
+          username: "",
+          email: "",
+          password: "",
+        },
+        inputFocus: {
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        },
+      });
+
+      setToggle(false);
+    }
   };
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -39,24 +129,29 @@ const Register = () => {
           <div>
             <div className="flex items-center justify-between">
               <label
-                htmlFor="userName"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                User Name
+                Username
               </label>
             </div>
             <div className="mt-2">
               <input
-                id="userName"
-                name="userName"
-                type="userName"
+                id="username"
+                name="username"
+                type="username"
                 onChange={(event) => handleSignInForm(event)}
-                autoComplete="userName"
+                autoComplete="off"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={signInForm.userName}
+                className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${registerForm.inputFocus.username} focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                value={registerForm.username}
               />
             </div>
+            {!canRegister && (
+              <p className="text-red-600">
+                {registerForm.errorMessage.username}
+              </p>
+            )}
           </div>
 
           <div>
@@ -77,10 +172,13 @@ const Register = () => {
                 onChange={(event) => handleSignInForm(event)}
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={signInForm.email}
+                className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset  placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${registerForm.inputFocus.email} focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                value={registerForm.email}
               />
             </div>
+            {!canRegister && (
+              <p className="text-red-600">{registerForm.errorMessage.email}</p>
+            )}
           </div>
 
           <div>
@@ -100,10 +198,43 @@ const Register = () => {
                 onChange={(event) => handleSignInForm(event)}
                 autoComplete="current-password"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={signInForm.password}
+                className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${registerForm.inputFocus.password} focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                value={registerForm.password}
               />
             </div>
+            {!canRegister && (
+              <p className="text-red-600">
+                {registerForm.errorMessage.password}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Password
+              </label>
+            </div>
+            <div className="mt-2">
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                onChange={(event) => handleSignInForm(event)}
+                autoComplete="current-password"
+                required
+                className={`block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset ${registerForm.inputFocus.password} sm:text-sm sm:leading-6`}
+                value={registerForm.confirmPassword}
+              />
+            </div>
+            {!canRegister && (
+              <p className="text-red-600">
+                {registerForm.errorMessage.password}
+              </p>
+            )}
           </div>
 
           <div>
@@ -113,7 +244,7 @@ const Register = () => {
               // disabled={!isDisabled}
               onClick={(event) => handleSubmit(event)}
             >
-              Sign in
+              Register
             </button>
           </div>
         </form>

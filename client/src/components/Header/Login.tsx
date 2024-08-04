@@ -1,11 +1,9 @@
 import { useState, ChangeEvent, useContext } from "react";
 import { login } from "../../services/authentication";
-import Modal from "../Modal";
-import Register from "./Register";
 import { HeaderContext } from "./Header";
 
 const SignIn = () => {
-  const { toggle, handleClick } = useContext(HeaderContext);
+  const { setShowRegistration } = useContext(HeaderContext);
 
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -24,7 +22,7 @@ const SignIn = () => {
   const handleSubmit = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event?.preventDefault();
+    event.preventDefault();
     await login(signInForm);
 
     setSignInForm({
@@ -41,7 +39,7 @@ const SignIn = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="/admin" method="POST">
+        <form className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -57,8 +55,9 @@ const SignIn = () => {
                 onChange={(event) => handleSignInForm(event)}
                 autoComplete="email"
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={signInForm.email}
+                pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
               />
             </div>
           </div>
@@ -87,9 +86,9 @@ const SignIn = () => {
                 type="password"
                 onChange={(event) => handleSignInForm(event)}
                 autoComplete="current-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={signInForm.password}
+                required
               />
             </div>
           </div>
@@ -109,14 +108,11 @@ const SignIn = () => {
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?
           <button
-            onClick={handleClick}
+            onClick={() => setShowRegistration(true)}
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
             {" " + "Sign up now"}
           </button>
-          <Modal isModalOpen={toggle} onClick={handleClick}>
-            <Register />
-          </Modal>
         </p>
       </div>
     </div>

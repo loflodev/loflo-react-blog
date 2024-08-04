@@ -33,12 +33,11 @@ export const login = async (req: express.Request, res: express.Response) => {
 
     await user.save();
 
-    res.cookie("access_token", user.authentication.sessionToken, {
+    res.cookie("LOFLODEV-AUTH", user.authentication.sessionToken, {
       httpOnly: true, // restrict accessibily only in server side
       domain: "localhost",
       path: "/",
       sameSite: "strict",
-      maxAge: 1000 * 60 * 60,
     });
 
     const { username, email: userEmail } = user;
@@ -64,14 +63,13 @@ export const register = async (req: express.Request, res: express.Response) => {
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      return res.sendStatus(400);
+      return res.sendStatus(400).json({message: "user already exist"});
     }
 
     const salt = random();
 
     const user = await createUser({
       email,
-      password,
       username,
       authentication: {
         salt,
@@ -79,24 +77,13 @@ export const register = async (req: express.Request, res: express.Response) => {
       },
     });
 
-    return res.status(200).json().end();
+    return res.status(200).json({message: "success"}).end();
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
 };
 
-export const admin = async (req: express.Request, res: express.Response) => {
-  // const userToken = req.cookies["user"];
-
-  try {
-    // res.render("/admin");
-    console.log("admin");
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(400);
-  }
-};
 
 export const logout = (req: express.Request, res: express.Response) => {
   res.clearCookie("access_token").json({ message: "Logout successful" });
