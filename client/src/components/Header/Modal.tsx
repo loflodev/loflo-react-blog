@@ -1,5 +1,5 @@
 import { ReactNode, useContext, useMemo } from "react";
-import { HeaderContext } from "./Header";
+import HeaderContext from "../../context/HeaderProvider";
 
 type ModalProps = {
   isModalOpen: boolean;
@@ -9,6 +9,7 @@ type ModalProps = {
 
 const Modal = ({ isModalOpen, onClick, children }: ModalProps) => {
   const { setShowRegistration } = useContext(HeaderContext);
+
   const showModal = useMemo(() => {
     return isModalOpen ? "modal-open" : "";
   }, [isModalOpen]);

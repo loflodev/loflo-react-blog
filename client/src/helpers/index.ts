@@ -16,6 +16,12 @@ export interface UserProfile {
   authentication: UserCredential;
 }
 
+export type userPublicProfileType = {
+  username: string
+  email: UserCredential["email"];
+  role: Role;
+}
+
 export const emailChecker = (input: string): InputValidationType => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const valid = regex.test(input);

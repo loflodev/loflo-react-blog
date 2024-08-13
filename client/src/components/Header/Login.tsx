@@ -1,9 +1,10 @@
 import { useState, ChangeEvent, useContext } from "react";
 import { login } from "../../services/authentication";
-import { HeaderContext } from "./Header";
+import HeaderContext from "../../context/HeaderProvider";
 
 const SignIn = () => {
-  const { setShowRegistration } = useContext(HeaderContext);
+  const { setShowRegistration, setToggle } = useContext(HeaderContext);
+
 
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -23,13 +24,24 @@ const SignIn = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
-    await login(signInForm);
 
-    setSignInForm({
-      email: "",
-      password: "",
-    });
+    try {
+      const userData = await login(signInForm);
+
+      window.localStorage.setItem("loggedUserInfo", JSON.stringify(userData));
+
+      setSignInForm({
+        email: "",
+        password: "",
+      });
+
+  
+      setToggle(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

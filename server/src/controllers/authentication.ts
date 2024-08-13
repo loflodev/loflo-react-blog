@@ -40,12 +40,15 @@ export const login = async (req: express.Request, res: express.Response) => {
       sameSite: "strict",
     });
 
-    const { username, email: userEmail } = user;
-
     return res
       .status(200)
-      .json({ username: username, email: userEmail })
-      .end()
+      .json({
+        username: user.username,
+        email: user.email,
+        _id: user._id,
+        sessionToken: user.authentication.sessionToken,
+      })
+      .end();
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
@@ -63,7 +66,7 @@ export const register = async (req: express.Request, res: express.Response) => {
     const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      return res.sendStatus(400).json({message: "user already exist"});
+      return res.sendStatus(400).json({ message: "user already exist" });
     }
 
     const salt = random();
@@ -77,13 +80,12 @@ export const register = async (req: express.Request, res: express.Response) => {
       },
     });
 
-    return res.status(200).json({message: "success"}).end();
+    return res.status(200).json({ message: "success" }).end();
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
 };
-
 
 export const logout = (req: express.Request, res: express.Response) => {
   res.clearCookie("access_token").json({ message: "Logout successful" });

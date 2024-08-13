@@ -1,7 +1,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { emailChecker, passwordChercker } from "../../helpers";
 import { register } from "../../services/authentication";
-import { HeaderContext } from "./Header";
+import HeaderContext from "../../context/HeaderProvider";
 
 interface RegisterFormValidation {
   username: string;
@@ -22,9 +22,8 @@ interface RegisterFormValidation {
 }
 
 const Register = () => {
-
   const { setToggle } = useContext(HeaderContext);
-  
+
   const [registerForm, setRegisterForm] = useState<RegisterFormValidation>({
     username: "",
     email: "",
@@ -46,7 +45,6 @@ const Register = () => {
   const [canRegister, setCanRegister] = useState<boolean>(false);
 
   const handleSignInForm = (event: ChangeEvent<HTMLInputElement>) => {
-    
     setRegisterForm((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,
