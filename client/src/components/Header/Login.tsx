@@ -1,10 +1,10 @@
-import { useState, ChangeEvent, useContext } from "react";
+import { useState, ChangeEvent, useContext, useEffect } from "react";
 import { login } from "../../services/authentication";
 import HeaderContext from "../../context/HeaderProvider";
 
 const SignIn = () => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
-
+  const [reload, setReload] = useState(false);
 
   const [signInForm, setSignInForm] = useState({
     email: "",
@@ -28,19 +28,25 @@ const SignIn = () => {
     try {
       const userData = await login(signInForm);
 
-      window.localStorage.setItem("loggedUserInfo", JSON.stringify(userData));
+      if (userData) {
+        window.localStorage.setItem("loggedUserInfo", JSON.stringify(userData));
+      }
 
       setSignInForm({
         email: "",
         password: "",
       });
 
-  
+      setReload(true);
       setToggle(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    reload && window.location.reload();
+  }, [reload]);
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

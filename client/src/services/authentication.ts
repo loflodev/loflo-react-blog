@@ -4,7 +4,7 @@ import { UserCredential, UserProfile } from "../helpers";
 export const login = async (login: UserCredential) => {
   try {
     const { data } = await axios.post("/auth/login", login);
-    console.log()
+    console.log();
     return data;
   } catch (error) {
     console.error(error);
@@ -28,6 +28,15 @@ export const register = async (user: UserProfile) => {
 export const getUser = async (userId: string) => {
   try {
     const response = await axios.get(`/user/${userId}`);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await axios.post("/auth/logout");
     return response;
   } catch (error) {
     console.error(error);

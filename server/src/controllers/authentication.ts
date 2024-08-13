@@ -34,7 +34,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     await user.save();
 
     res.cookie("LOFLODEV-AUTH", user.authentication.sessionToken, {
-      httpOnly: true, // restrict accessibily only in server side
+      httpOnly: true, // restrict accessibility only in server side
       domain: "localhost",
       path: "/",
       sameSite: "strict",
