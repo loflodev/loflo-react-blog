@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, useState } from "react";
+import { createContext, Dispatch, ReactNode, useEffect, useState } from "react";
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -28,6 +28,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     email: "",
     _id: "",
   });
+
+
+  useEffect(() => {
+    const userInfoJSON = window.localStorage.getItem("loggedUserInfo");
+
+    if (userInfoJSON) {
+      const userData = JSON.parse(userInfoJSON);
+      setAuth(userData);
+      setIsLogged(true);
+    }
+  }, []);
 
 
 
