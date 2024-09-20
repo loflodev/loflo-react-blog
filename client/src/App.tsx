@@ -6,6 +6,7 @@ import About from "./pages/About";
 import PostDetail from "./pages/PostDetail";
 import Layout from "./components/Layout";
 import UserPage from "./pages/UserPage";
+import UserLayout from "./components/UserLayout";
 
 function App() {
   return (
@@ -13,11 +14,13 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/user" element={<UserPage />} />
           <Route path="/category" element={<Category />} />
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<Search />} />
           <Route path="/post/:id" element={<PostDetail />} />
+        </Route>
+        <Route element={<UserLayout />}>
+          <Route path="/user" element={<UserPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

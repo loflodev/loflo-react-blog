@@ -1,17 +1,22 @@
 import { Link } from "react-router-dom";
 import Icons from "./Icons";
+import { useResponsive } from "../hooks/useResponsive";
 
 const Footer = () => {
+  const breakpoint = useResponsive([768, 1024, 1310]);
+  const isDesktop = breakpoint === 2 || breakpoint === 3;
+  const screen = isDesktop ? "w-[75%]" : "w-[90%]"
+
   return (
     <footer className="bg-light-grey-2">
-      <div className="flex w-[85%] m-auto pt-16 pb-12 justify-between border-b-2 border-b-[#C0C0C0] flex-wrap">
+      <div className={`flex ${screen} m-auto pt-16 pb-12 justify-between border-b-2 border-b-[#C0C0C0] flex-wrap`}>
         <div className="flex gap-5 flex-col mb-4">
           <div className="logo">
             <Link
               to={"/"}
               className="font-semibold text-4xl text-logo-primary leading-5"
             >
-              Dasteen
+              LofloDev
               <span className="font-bold text-logo-seconday text-lg leading-6">
                 .Blog
               </span>
@@ -67,7 +72,7 @@ const Footer = () => {
           </nav>
         </div>
       </div>
-      <div className="flex w-[85%] m-auto justify-between py-6 text-sm leading-5 text-[#2B2C34]">
+      <div className={`flex ${screen} m-auto justify-between py-6 text-sm leading-5 text-[#2B2C34]`}>
         <p>© 2024 Digitaldastin</p>
         <p>Made With ❤️ Jakarta, Haiti</p>
       </div>

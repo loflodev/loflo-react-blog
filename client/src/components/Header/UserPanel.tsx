@@ -3,12 +3,13 @@ import AuthContext from "../../context/AuthProvider";
 import Button from "../Button";
 import { logout } from "../../services/authentication";
 
-interface HeaderUserPanelProps {
+interface UserPanelProps {
   handleSignInClick: () => void;
 }
 
-const HeaderUserPanel = ({ handleSignInClick }: HeaderUserPanelProps) => {
+const HeaderUserPanel = ({ handleSignInClick }: UserPanelProps) => {
   const { isLogged, auth } = useContext(AuthContext);
+  
   const handleLogout = async () => {
     window.localStorage.removeItem("loggedUserInfo");
     await logout();

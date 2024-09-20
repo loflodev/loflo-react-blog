@@ -2,6 +2,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import { emailChecker, passwordChercker } from "../../helpers";
 import { register } from "../../services/authentication";
 import HeaderContext from "../../context/HeaderProvider";
+import { ErrorMessage } from "../../helpers/types";
 
 interface RegisterFormValidation {
   username: string;
@@ -9,9 +10,9 @@ interface RegisterFormValidation {
   password: string;
   confirmPassword: string;
   errorMessage: {
-    username: string;
-    email: string;
-    password: string;
+    username: ErrorMessage;
+    email: ErrorMessage;
+    password: ErrorMessage;
   };
   inputFocus: {
     username: string;
@@ -30,9 +31,9 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     errorMessage: {
-      username: "",
-      email: "",
-      password: "",
+      username: undefined,
+      email: undefined,
+      password: undefined,
     },
     inputFocus: {
       username: "ring-gray-300",
@@ -66,14 +67,15 @@ const Register = () => {
       return {
         ...prevData,
         errorMessage: {
-          username: prevData.username.length < 3 ? "username is too short" : "",
-          email: !email.isValid ? email.message : "",
-          password: !password.isValid ? password.message : "",
+          username:
+            prevData.username.length < 3 ? "username is too short" : undefined,
+          email: !email.isValid ? email.message : undefined,
+          password: !password.isValid ? password.message : undefined,
         },
         inputFocus: {
           username:
             prevData.username.length < 3 ? "ring-red-600" : "ring-gray-300",
-          email: !email.isValid ? "ring-red-600]" : "ring-gray-300",
+          email: !email.isValid ? "ring-red-600" : "ring-gray-300",
           password: !password.isValid ? "ring-red-600" : "ring-gray-300",
           confirmPassword: !password.isValid ? "ring-red-600" : "ring-gray-300",
         },
@@ -99,9 +101,9 @@ const Register = () => {
         password: "",
         confirmPassword: "",
         errorMessage: {
-          username: "",
-          email: "",
-          password: "",
+          username: undefined,
+          email: undefined,
+          password: undefined,
         },
         inputFocus: {
           username: "",

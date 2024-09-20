@@ -9,3 +9,42 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+img {
+  width: 100%;
+  object-fit: contain;
+}
+
+@media only screen and (min-width: 375px) and (max-width: 767px) {
+  .logo h1 {
+    font-size: 22px;
+  }
+  .signin-btn {
+    padding: 10px 12px;
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+}
+
+@media only screen and (max-width: 1310px) {
+ .hero-container {
+  flex-direction: column;
+  padding-top: 36px;
+ }
+ .hero-container h1 {
+  font-size: 38px;
+  line-height: 38px;
+ }
+ .hero-container p {
+  font-size: 16px;
+  line-height: 20px;
+ }
+ .hero-illustration {
+  width: 80%;
+  order: -999;
+  justify-content: center;
+  align-items: center;
+ }
+}

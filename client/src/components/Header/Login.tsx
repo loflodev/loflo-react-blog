@@ -1,17 +1,43 @@
 import { useState, ChangeEvent, useContext, useEffect } from "react";
 import { login } from "../../services/authentication";
 import HeaderContext from "../../context/HeaderProvider";
+import { ErrorMessage } from "../../helpers/types";
+import { emailChecker } from "../../helpers";
+
+type SignInFormType = {
+  email: string;
+  password: string;
+  errorMessage: {
+    email: ErrorMessage;
+    password: ErrorMessage;
+  };
+  inputFocus: {
+    email: string;
+    password: string;
+  };
+};
 
 const SignIn = () => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
+  const [canRegister, setCanRegister] = useState<boolean>(false);
   const [reload, setReload] = useState(false);
+  const [incorrectCredentials, setIncorrectCredentials] =
+    useState<ErrorMessage>();
 
-  const [signInForm, setSignInForm] = useState({
+  const [signInForm, setSignInForm] = useState<SignInFormType>({
     email: "",
     password: "",
+    errorMessage: {
+      email: undefined,
+      password: undefined,
+    },
+    inputFocus: {
+      email: "ring-gray-300",
+      password: "ring-gray-300",
+    },
   });
 
-  const isDisabled = Boolean(signInForm.email && signInForm.password);
+  // const isDisabled = Boolean(signInForm.email && signInForm.password);
 
   const handleSignInForm = (event: ChangeEvent<HTMLInputElement>) => {
     setSignInForm((prevSignData) => ({
@@ -25,20 +51,59 @@ const SignIn = () => {
   ) => {
     event.preventDefault();
 
+    const email = emailChecker(signInForm.email);
+
+    setSignInForm((prevData) => {
+      return {
+        ...prevData,
+        email: email.isValid ? email.input : "",
+        password: prevData.password.length < 3 ? "" : prevData.password,
+        errorMessage: {
+          email: email.isValid ? undefined : "Email is incorrect",
+          password:
+            prevData.password.length < 3 ? "Password is too short" : undefined,
+        },
+        inputFocus: {
+          email: email.isValid ? "ring-gray-300" : "ring-red-600",
+          password:
+            prevData.password.length < 3 ? "ring-red-600" : "ring-gray-300",
+        },
+      };
+    });
+
+    setCanRegister(email.isValid && Boolean(signInForm.password));
+    console.log(canRegister);
+
     try {
-      const userData = await login(signInForm);
+      if (canRegister) {
+        const userData = await login(signInForm);
 
-      if (userData) {
-        window.localStorage.setItem("loggedUserInfo", JSON.stringify(userData));
+        setIncorrectCredentials("Incorrect email or password");
+
+        if (userData) {
+          window.localStorage.setItem(
+            "loggedUserInfo",
+            JSON.stringify(userData)
+          );
+
+          setIncorrectCredentials(undefined);
+          setSignInForm({
+            email: "",
+            password: "",
+            errorMessage: {
+              email: undefined,
+              password: undefined,
+            },
+            inputFocus: {
+              email: "ring-gray-300",
+              password: "ring-gray-300",
+            },
+          });
+
+          setReload(true);
+          setToggle(false);
+        }
       }
-
-      setSignInForm({
-        email: "",
-        password: "",
-      });
-
-      setReload(true);
-      setToggle(false);
     } catch (error) {
       console.log(error);
     }
@@ -75,9 +140,11 @@ const SignIn = () => {
                 required
                 className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={signInForm.email}
-                pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"
               />
             </div>
+            {!canRegister && (
+              <p className="text-red-600">{signInForm.errorMessage.email}</p>
+            )}
           </div>
 
           <div>
@@ -109,17 +176,22 @@ const SignIn = () => {
                 required
               />
             </div>
+            {!canRegister && (
+              <p className="text-red-600">{signInForm.errorMessage.password}</p>
+            )}
           </div>
 
           <div>
             <button
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              disabled={!isDisabled}
               onClick={(event) => handleSubmit(event)}
             >
               Sign in
             </button>
+            {incorrectCredentials && (
+              <p className="text-red-600">{incorrectCredentials}</p>
+            )}
           </div>
         </form>
 

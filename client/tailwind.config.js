@@ -18,11 +18,21 @@ export default {
       },
       backgroundColor: {
         'white': '#FFFFFE',
-        'light-grey-1': '#EFF0F3',
+        'light-grey-1': '#EFF0F3', 
         'light-grey-2': '#E4E5E9',
         'logo-primary': '#001858',
         'btn-hover': '#4d7dff',
-      }
+      },
+      screens: {
+        's-mb': {'min': '375px', 'max': '767px'},
+        // => @media (min-width: 375px and max-width: 767px) { ... }
+    
+        's-tb': {'min': '768px', 'max': '1023px'},
+        // => @media (min-width: 768px and max-width: 1023px) { ... }
+    
+        's-dk': {'min': '1024px'},
+        // => @media (min-width: 1024px) { ... }
+      },
     },
   },
   plugins: [daisyui],

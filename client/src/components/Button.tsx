@@ -1,18 +1,19 @@
 interface ButtonProps {
   children: React.ReactNode;
-  onClick?: () => void;
   fitContent?: boolean;
+  size?: 2 | 4 | 6 | 8;
 }
 
-const Button = ({ children, onClick, fitContent }: ButtonProps) => {
+const Button = ({ children, fitContent, size, ...rest }: ButtonProps) => {
   const fullWidth = fitContent ? "w-full" : undefined;
+  const pd = size ? size : 4;
   return (
-    <a
-      className={`btn ${fullWidth} bg-[#6246EA] hover:bg-btn-hover text-white px-4 py-2 uppercase`}
-      onClick={onClick}
+    <button
+      className={`${fullWidth} bg-[#6246EA] hover:bg-btn-hover text-white text-lg font-bold rounded-md leading-6 px-4 py-${pd} capitalize signin-btn`}
+      {...rest}
     >
       {children}
-    </a>
+    </button>
   );
 };
 
