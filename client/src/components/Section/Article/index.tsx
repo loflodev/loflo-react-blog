@@ -29,23 +29,3 @@ const Article = () => {
 };
 
 export default Article;
-
-
-/* Article Post Card
-
-Article Post Card
-
-*/
-
-width: 300px;
-height: 425px;
-
-/* White */
-background: #FFFFFE;
-border-radius: 12px;
-
-/* Inside auto layout */
-flex: none;
-order: 0;
-flex-grow: 0;
-
