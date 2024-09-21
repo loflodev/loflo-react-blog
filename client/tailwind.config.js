@@ -24,7 +24,7 @@ export default {
         'btn-hover': '#4d7dff',
       },
       screens: {
-        's-mb': {'min': '375px', 'max': '767px'},
+        's-mb': {'max': '767px'},
         // => @media (min-width: 375px and max-width: 767px) { ... }
     
         's-tb': {'min': '768px', 'max': '1023px'},

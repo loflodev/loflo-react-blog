@@ -13,14 +13,16 @@ const NavBar = () => {
   const isDesktop = breakpoint === 2 || breakpoint === 3;
   const screen = isDesktop ? "w-[75%]" : "w-[90%]"
 
+
+
   return (
     <div className="bg-light-grey-1">
       <div className={`flex justify-between items-center ${screen} m-auto py-4`}>
         <div className="logo-container">
-          <Link to="" className="logo">
-            <h1 className="font-semibold text-4xl text-logo-primary leading-5">
+          <Link to="">
+            <p className="logo">
               LofloDev &#x276F;
-            </h1>
+            </p>
           </Link>
         </div>
 

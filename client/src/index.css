@@ -8,6 +8,7 @@
   font-family: "Plus Jakarta Sans", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+  color: #2b2c34;
 }
 
 img {
@@ -15,7 +16,40 @@ img {
   object-fit: contain;
 }
 
-@media only screen and (min-width: 375px) and (max-width: 767px) {
+.wrapper {
+  width: 75%;
+  margin: auto;
+}
+
+
+@layer components {
+  .logo {
+    @apply font-semibold text-4xl text-logo-primary leading-5;
+  }
+  h1 {
+    @apply text-[64px] font-bold leading-[81px] capitalize mt-2;
+  }
+  h2 {
+    @apply font-bold text-2xl leading-7 capitalize text-left s-mb:text-base;
+  }
+  h3 {
+    @apply font-bold text-xl leading-6 s-mb:text-sm;
+  }
+  .paragraph {
+    @apply text-xl text-dark-grey leading-6 border-l-4 border-base border-solid pl-2;
+  }
+  .card-category {
+    @apply flex mb-8 bg-white rounded-lg w-[220px] h-[280px] pl-7 pt-[65px] cursor-pointer hover:bg-logo-seconday hover:text-white;
+  }
+  .author-name {
+    @apply font-semibold text-base leading-5;
+  }
+  .author-date {
+    @apply text-sm leading-4 capitalize;
+  }
+}
+
+@media only screen and (max-width: 767px) {
   .logo h1 {
     font-size: 22px;
   }
@@ -29,22 +63,25 @@ img {
 }
 
 @media only screen and (max-width: 1310px) {
- .hero-container {
-  flex-direction: column;
-  padding-top: 36px;
- }
- .hero-container h1 {
-  font-size: 38px;
-  line-height: 38px;
- }
- .hero-container p {
-  font-size: 16px;
-  line-height: 20px;
- }
- .hero-illustration {
-  width: 80%;
-  order: -999;
-  justify-content: center;
-  align-items: center;
- }
+  .hero-container {
+    flex-direction: column;
+    padding-top: 36px;
+  }
+  .hero-container h1 {
+    font-size: 38px;
+    line-height: 38px;
+  }
+  .hero-container p {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .hero-illustration {
+    width: 80%;
+    order: -999;
+    justify-content: center;
+    align-items: center;
+  }
+  .wrapper {
+    width: 90%;
+  }
 }
