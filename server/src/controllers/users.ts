@@ -7,7 +7,6 @@ export const getAllUsers = async (
 ) => {
   try {
     const users = await getUsers();
-    console.log(users);
 
     return res.status(200).json(users);
   } catch (error) {
@@ -19,9 +18,8 @@ export const getAllUsers = async (
 export const getUser = async (req: express.Request, res: express.Response) => {
   try {
     const { id } = req.params;
-    console.log(id)
+    
     const user = await getUserById(id);
-    console.log(user);
 
     return res.status(200).json(user);
   } catch (error) {

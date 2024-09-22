@@ -1,5 +1,4 @@
 import express from "express";
-
 import { deleteUser, getAllUsers, getUser, updateUser } from "../controllers/users";
 import { isAuthenticated, isOwner } from "../middlewares";
 
