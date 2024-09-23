@@ -5,24 +5,16 @@ import { useContext } from "react";
 import Register from "./Register";
 import HeaderContext from "../../context/HeaderProvider";
 import HeaderUserPanel from "./UserPanel";
-import { useResponsive } from "../../hooks/useResponsive";
 
 const NavBar = () => {
   const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
-  const breakpoint = useResponsive([768, 1024, 1310]);
-  const isDesktop = breakpoint === 2 || breakpoint === 3;
-  const screen = isDesktop ? "w-[75%]" : "w-[90%]"
-
-
 
   return (
     <div className="bg-light-grey-1">
-      <div className={`flex justify-between items-center ${screen} m-auto py-4`}>
+      <div className={`flex justify-between items-center wrapper py-4`}>
         <div className="logo-container">
           <Link to="">
-            <p className="logo">
-              LofloDev &#x276F;
-            </p>
+            <p className="logo">LofloDev &#x276F;</p>
           </Link>
         </div>
 

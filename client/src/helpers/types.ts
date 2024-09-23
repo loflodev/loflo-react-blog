@@ -1,12 +1,5 @@
 export type Role = "admin" | "suscriber";
 
-export interface User {
-  username: string;
-  email: string;
-  password: string;
-  role: Role;
-}
-
 export type ErrorMessage =
   | "Email is incorrect"
   | "Incorrect password"
@@ -21,3 +14,22 @@ export type InputValidationType = {
   isValid: boolean;
   input: string;
 };
+
+export interface User {
+  username: string;
+  email: string;
+  password: string;
+  role: Role;
+}
+
+export interface Post {
+  title: string;
+  content: string;
+  author: string;
+  category: string;
+  tags?: string[];
+  cover?: string;
+  view?: string;
+  createAt: string;
+  updateAt: string;
+}

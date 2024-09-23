@@ -1,23 +1,29 @@
 import axios from "../api/axios";
-import { UserCredential, UserProfile } from "../helpers";
+import { User } from "../helpers/types";
 
-export const login = async (login: UserCredential) => {
+type Credential = {
+  username?: User["username"];
+  email: User["email"];
+  password: User["password"];
+};
+
+export const login = async (credential: Credential) => {
   try {
-    const { data } = await axios.post("/auth/login", login);
-    console.log();
+    const { data } = await axios.post("/auth/login", credential);
+    
     return data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const register = async (user: UserProfile) => {
-  const { username, authentication } = user;
+export const register = async (credential: Credential) => {
+  const { username, email, password } = credential;
   try {
     const response = await axios.post("/auth/register", {
-      email: authentication.email,
-      password: authentication.password,
-      username: username,
+      email: email,
+      password: password,
+      username: username ? username : email,
     });
     console.log(response);
   } catch (error) {

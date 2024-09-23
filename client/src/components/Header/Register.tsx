@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useState } from "react";
-import { emailChecker, passwordChercker } from "../../helpers";
+import { emailChecker, passwordChercker } from "../../helpers/utils";
 import { register } from "../../services/authentication";
 import HeaderContext from "../../context/HeaderProvider";
 import { ErrorMessage } from "../../helpers/types";

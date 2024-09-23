@@ -2,7 +2,7 @@ import { useState, ChangeEvent, useContext, useEffect } from "react";
 import { login } from "../../services/authentication";
 import HeaderContext from "../../context/HeaderProvider";
 import { ErrorMessage } from "../../helpers/types";
-import { emailChecker } from "../../helpers";
+import { emailChecker } from "../../helpers/utils";
 
 type SignInFormType = {
   email: string;

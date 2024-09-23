@@ -3,10 +3,9 @@ export interface Post {
   content: string;
   author: string;
   category: string;
-  createAt?: Date;
-  updateAt?: Date;
   tags?: string[];
   cover?: string;
   view?: number;
-  readCounter?: string;
+  createAt?: Date;
+  updateAt?: Date;
 }
