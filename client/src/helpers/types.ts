@@ -22,11 +22,13 @@ export interface User {
   role: Role;
 }
 
+export type IconsType = "css" | "js" | "react" | "tailwind" | "vue";
+
 export interface Post {
   title: string;
   content: string;
   author: string;
-  category: string;
+  category: IconsType;
   tags?: string[];
   cover?: string;
   view?: string;

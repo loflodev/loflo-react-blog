@@ -3,7 +3,7 @@ import CallToAction from "./CallToAction";
 
 const Hero = () => {
   return (
-    <section className="bg-[url('./public/Dot.png')] bg-light-grey-1">
+    <section className="bg-[url('./Dot.png')] bg-light-grey-1">
       <div
         className={`flex  wrapper pt-[185px] justify-between hero-container`}
       >

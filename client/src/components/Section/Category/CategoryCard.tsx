@@ -3,8 +3,8 @@ import js from "../../../assets/img/js.png";
 import react from "../../../assets/img/react.png";
 import tailwind from "../../../assets/img/tailwind.png";
 import vue from "../../../assets/img/vue.png";
+import { IconsType } from "../../../helpers/types";
 
-type IconsType = "css" | "js" | "react" | "tailwind" | "vue";
 
 type Props = {
   icon: IconsType;

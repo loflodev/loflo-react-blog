@@ -1,7 +1,12 @@
 import CategoryCard from "./CategoryCard";
 import SectionHeader from "../Header";
+import { IconsType, Post } from "../../../helpers/types";
 
-const Category = () => {
+interface Props {
+  categories: Post["category"][];
+}
+
+const Category = ({ categories }: Props) => {
   const title = { name: "Browse the category", filter: "see all category" };
   return (
     <section className="bg-light-grey-1 py-[68px]">
@@ -10,11 +15,12 @@ const Category = () => {
           <SectionHeader title={title} />
         </div>
         <div className="flex pt-12 justify-between s-mb:justify-center flex-wrap">
-          <CategoryCard icon="css" />
+          {(categories || []).map((category: IconsType) => (<CategoryCard icon={category} />))}
+          {/* <CategoryCard icon="css" />
           <CategoryCard icon="js" />
           <CategoryCard icon="tailwind" />
           <CategoryCard icon="vue" />
-          <CategoryCard icon="react" />
+          <CategoryCard icon="react" /> */}
         </div>
       </div>
     </section>
