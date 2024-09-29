@@ -8,17 +8,19 @@ interface Props {
 }
 
 const Article = ({ posts }: Props) => {
-  const title = { name: "CSS", filter: "see all article" };
+  const titles = { name: "CSS", filter: "see all article" };
 
   return (
     <article className="bg-white py-[68px]">
       <div className="wrapper">
-        <Header title={title} />
+        <Header title={titles} />
 
         <div className="flex pt-12 justify-between flex-wrap">
-          {(posts || []).slice(0, 4).map((post) => (
-            <ArticleCard post={post} />
-          ))}
+          {!posts || posts.length === 0 ? (
+            <div>No Article Found...</div>
+          ) : (
+            posts.slice(0, 4).map((post) => <ArticleCard post={post} />)
+          )}
         </div>
       </div>
     </article>
