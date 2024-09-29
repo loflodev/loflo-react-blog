@@ -1,5 +1,4 @@
 import Header from "../../../components/Section/Header";
-// import book from "../../../assets/img/javascript book.png";
 import ArticleCard from "./ArticleCard";
 import { Post } from "../../../helpers/types";
 
@@ -15,7 +14,7 @@ const Article = ({ posts }: Props) => {
       <div className="wrapper">
         <Header title={titles} />
 
-        <div className="flex pt-12 justify-between flex-wrap">
+        <div className="article-grid">
           {!posts || posts.length === 0 ? (
             <div>No Article Found...</div>
           ) : (

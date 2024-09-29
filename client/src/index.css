@@ -11,21 +11,15 @@
   color: #2b2c34;
 }
 
-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.wrapper {
-  width: 85%;
-  margin: auto;
-}
-
-
 @layer components {
+  .wrapper {
+    @apply w-[85%] m-auto;
+  }
   .logo {
     @apply font-semibold text-4xl text-logo-primary leading-5;
+  }
+  img {
+    @apply w-full h-full object-cover;
   }
   h1 {
     @apply text-[64px] font-bold leading-[81px] capitalize mt-2;
@@ -36,17 +30,29 @@ img {
   h3 {
     @apply font-bold text-xl leading-6 s-mb:text-sm;
   }
+  h4 {
+    @apply font-bold text-4xl leading-6 s-mb:text-sm;
+  }
   .paragraph {
     @apply text-xl text-dark-grey leading-6 border-l-4 border-base border-solid pl-2;
   }
+  .paragraph-2 {
+    @apply text-xl leading-6;
+  }
   .card-category {
-    @apply flex mb-8 bg-white rounded-lg w-[220px] h-[280px] pl-7 pt-[65px] cursor-pointer hover:bg-logo-seconday hover:text-white;
+    @apply pl-7 pt-8 rounded-lg bg-white cursor-pointer hover:bg-logo-seconday hover:text-white;
   }
   .author-name {
     @apply font-semibold text-base leading-5;
   }
   .author-date {
     @apply text-sm leading-4 capitalize;
+  }
+  .category-grid {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] auto-rows-[280px] gap-[50px] justify-between pt-12;
+  }
+  .article-grid {
+    @apply grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] auto-rows-[516px] gap-[50px] justify-between pt-12;
   }
 }
 

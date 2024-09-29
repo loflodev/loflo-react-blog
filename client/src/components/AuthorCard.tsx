@@ -4,7 +4,7 @@ type Props = {
   authorInfo: {
     name: string;
     date: string;
-    read: string;
+    read: string | undefined;
   };
 };
 const AuthorCard = ({ authorInfo }: Props) => {

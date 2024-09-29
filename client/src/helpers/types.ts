@@ -25,6 +25,7 @@ export interface User {
 export type IconsType = "css" | "js" | "react" | "tailwind" | "vue";
 
 export interface Post {
+  _id: string;
   title: string;
   content: string;
   author: string;

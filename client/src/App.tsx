@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Category from "./components/Section/Category";
 import Search from "./pages/Search";
 import About from "./pages/About";
 import PostDetail from "./pages/PostDetail";
 import Layout from "./components/Layout";
 import UserPage from "./pages/UserPage";
 import UserLayout from "./components/UserLayout";
+import Category from "./pages/Category";
 
 function App() {
   return (

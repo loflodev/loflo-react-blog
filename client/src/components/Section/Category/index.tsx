@@ -15,7 +15,7 @@ const Category = ({ categories }: Props) => {
         <div>
           <SectionHeader title={title} />
         </div>
-        <div className="flex pt-12 justify-between s-mb:justify-center flex-wrap">
+        <div className="category-grid">
           {filterCategories &&
             filterCategories.map((category: IconsType) => (
               <CategoryCard icon={category} />
