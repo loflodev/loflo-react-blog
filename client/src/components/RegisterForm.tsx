@@ -1,10 +1,10 @@
 import { ChangeEvent, useContext, useState } from "react";
-import { emailChecker, passwordChercker } from "../../helpers/utils";
-import { register } from "../../services/authentication";
-import HeaderContext from "../../context/HeaderProvider";
-import { ErrorMessage } from "../../helpers/types";
+import { emailChecker, passwordChercker } from "../helpers/utils";
+import { register } from "../services/authentication";
+import HeaderContext from "../context/HeaderProvider";
+import { ErrorMessage } from "../helpers/types";
 
-interface RegisterFormValidation {
+interface RegisterFormType {
   username: string;
   email: string;
   password: string;
@@ -22,10 +22,10 @@ interface RegisterFormValidation {
   };
 }
 
-const Register = () => {
+const RegisterForm = () => {
   const { setToggle } = useContext(HeaderContext);
 
-  const [registerForm, setRegisterForm] = useState<RegisterFormValidation>({
+  const [registerForm, setRegisterForm] = useState<RegisterFormType>({
     username: "",
     email: "",
     password: "",
@@ -253,4 +253,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterForm;

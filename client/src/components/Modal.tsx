@@ -1,5 +1,5 @@
 import { ReactNode, useContext, useMemo } from "react";
-import HeaderContext from "../../context/HeaderProvider";
+import HeaderContext from "../context/HeaderProvider";
 
 type ModalProps = {
   isModalOpen: boolean;

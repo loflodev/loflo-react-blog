@@ -5,7 +5,7 @@ import About from "./pages/About";
 import PostDetail from "./pages/PostDetail";
 import Layout from "./components/Layout";
 import UserPage from "./pages/UserPage";
-import UserLayout from "./components/UserLayout";
+import PageLayout from "./layouts/Page";
 import Category from "./pages/Category";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/post/:id" element={<PostDetail />} />
         </Route>
-        <Route element={<UserLayout />}>
+        <Route element={<PageLayout />}>
           <Route path="/user" element={<UserPage />} />
         </Route>
       </Routes>

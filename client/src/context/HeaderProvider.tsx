@@ -3,6 +3,7 @@ import { createContext, Dispatch, ReactNode, useState } from "react";
 interface HeaderProviderProps {
   children: ReactNode;
 }
+
 type HeaderContextType = {
   toggle: boolean;
   setToggle: Dispatch<React.SetStateAction<boolean>>;
@@ -10,6 +11,7 @@ type HeaderContextType = {
   showRegistration: boolean;
   setShowRegistration: Dispatch<React.SetStateAction<boolean>>;
 };
+
 const HeaderContext = createContext<HeaderContextType>({
   toggle: false,
   setToggle: () => {},
@@ -23,6 +25,7 @@ export const HeaderProvider = ({ children }: HeaderProviderProps) => {
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
 
   const handleClick = () => {
+    console.log("llmando")
     setToggle(!toggle);
   };
 

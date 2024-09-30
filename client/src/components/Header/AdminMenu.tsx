@@ -1,26 +1,22 @@
-import { useContext } from "react";
-import AuthContext from "../../context/AuthProvider";
-import Button from "../Button";
 import { logout } from "../../services/authentication";
 
-interface UserPanelProps {
-  handleSignInClick: () => void;
+interface Props {
+  username: string;
+  setReload: (value: boolean) => void;
 }
 
-const HeaderUserPanel = ({ handleSignInClick }: UserPanelProps) => {
-  const { isLogged, auth } = useContext(AuthContext);
-  
+const AdminMenu = ({ username, setReload }: Props) => {
   const handleLogout = async () => {
     window.localStorage.removeItem("loggedUserInfo");
     await logout();
-    window.location.reload();
+    setReload(false);
   };
 
-  return isLogged ? (
+  return (
     <div>
       <div className="dropdown px-5 py-2 rounded-2xl bg-logo-seconday text-white text-xl font-semibold">
         <div tabIndex={0} role="button" className="">
-          {`Hello, ${auth.username} >`}
+          {`Hello, ${username} >`}
         </div>
         <ul
           tabIndex={0}
@@ -35,9 +31,7 @@ const HeaderUserPanel = ({ handleSignInClick }: UserPanelProps) => {
         </ul>
       </div>
     </div>
-  ) : (
-    <Button onClick={handleSignInClick}>Sign in</Button>
   );
 };
 
-export default HeaderUserPanel;
+export default AdminMenu;

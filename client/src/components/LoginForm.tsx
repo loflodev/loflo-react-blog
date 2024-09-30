@@ -1,10 +1,10 @@
-import { useState, ChangeEvent, useContext, useEffect } from "react";
-import { login } from "../../services/authentication";
-import HeaderContext from "../../context/HeaderProvider";
-import { ErrorMessage } from "../../helpers/types";
-import { emailChecker } from "../../helpers/utils";
+import { useState, ChangeEvent, useContext } from "react";
+import { login } from "../services/authentication";
+import HeaderContext from "../context/HeaderProvider";
+import { ErrorMessage } from "../helpers/types";
+import { emailChecker } from "../helpers/utils";
 
-type SignInFormType = {
+interface LoginFormType {
   email: string;
   password: string;
   errorMessage: {
@@ -15,16 +15,19 @@ type SignInFormType = {
     email: string;
     password: string;
   };
-};
+}
 
-const SignIn = () => {
+interface Props {
+  setReload: (value: boolean) => void;
+}
+
+const LoginForm = ({ setReload }: Props) => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
   const [canRegister, setCanRegister] = useState<boolean>(false);
-  const [reload, setReload] = useState(false);
   const [incorrectCredentials, setIncorrectCredentials] =
     useState<ErrorMessage>();
 
-  const [signInForm, setSignInForm] = useState<SignInFormType>({
+  const [signInForm, setSignInForm] = useState<LoginFormType>({
     email: "",
     password: "",
     errorMessage: {
@@ -36,8 +39,6 @@ const SignIn = () => {
       password: "ring-gray-300",
     },
   });
-
-  // const isDisabled = Boolean(signInForm.email && signInForm.password);
 
   const handleSignInForm = (event: ChangeEvent<HTMLInputElement>) => {
     setSignInForm((prevSignData) => ({
@@ -72,11 +73,13 @@ const SignIn = () => {
     });
 
     setCanRegister(email.isValid && Boolean(signInForm.password));
-    console.log(canRegister);
 
     try {
       if (canRegister) {
-        const userData = await login(signInForm);
+        const userData = await login({
+          email: signInForm.email,
+          password: signInForm.password,
+        });
 
         setIncorrectCredentials("Incorrect email or password");
 
@@ -108,10 +111,6 @@ const SignIn = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    reload && window.location.reload();
-  }, [reload]);
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -209,4 +208,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default LoginForm;

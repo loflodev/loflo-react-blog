@@ -88,6 +88,5 @@ export const register = async (req: express.Request, res: express.Response) => {
 };
 
 export const logout = (req: express.Request, res: express.Response) => {
-  console.log("aver")
   res.clearCookie("LOFLODEV-AUTH").json({ message: "Logout successful" });
 };
