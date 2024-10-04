@@ -47,6 +47,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         email: user.email,
         _id: user._id,
         sessionToken: user.authentication.sessionToken,
+        role: user.role,
       })
       .end();
   } catch (error) {
@@ -57,7 +58,7 @@ export const login = async (req: express.Request, res: express.Response) => {
 
 export const register = async (req: express.Request, res: express.Response) => {
   try {
-    const { email, password, username } = req.body;
+    const { email, password, username, role } = req.body;
 
     if (!email || !password || !username) {
       return res.sendStatus(400);
@@ -70,6 +71,7 @@ export const register = async (req: express.Request, res: express.Response) => {
     }
 
     const salt = random();
+    const useRole = role ? role : "suscriber";
 
     const user = await createUser({
       email,
@@ -78,6 +80,7 @@ export const register = async (req: express.Request, res: express.Response) => {
         salt,
         password: authentication(salt, password),
       },
+      role: useRole,
     });
 
     return res.status(200).json({ message: "success" }).end();

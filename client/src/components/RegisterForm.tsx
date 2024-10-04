@@ -89,10 +89,8 @@ const RegisterForm = () => {
     if (canRegister) {
       await register({
         username: registerForm.username,
-        authentication: {
-          email: registerForm.email,
-          password: registerForm.password,
-        },
+        email: registerForm.email,
+        password: registerForm.password,
       });
 
       setRegisterForm({

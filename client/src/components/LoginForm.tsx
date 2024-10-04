@@ -3,6 +3,7 @@ import { login } from "../services/authentication";
 import HeaderContext from "../context/HeaderProvider";
 import { ErrorMessage } from "../helpers/types";
 import { emailChecker } from "../helpers/utils";
+import AuthContext from "../context/AuthProvider";
 
 interface LoginFormType {
   email: string;
@@ -17,12 +18,9 @@ interface LoginFormType {
   };
 }
 
-interface Props {
-  setReload: (value: boolean) => void;
-}
-
-const LoginForm = ({ setReload }: Props) => {
+const LoginForm = () => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
+  const { setAuth, setIsLogged } = useContext(AuthContext);
   const [canRegister, setCanRegister] = useState<boolean>(false);
   const [incorrectCredentials, setIncorrectCredentials] =
     useState<ErrorMessage>();
@@ -89,6 +87,9 @@ const LoginForm = ({ setReload }: Props) => {
             JSON.stringify(userData)
           );
 
+          setIsLogged(true);
+          setAuth(userData);
+
           setIncorrectCredentials(undefined);
           setSignInForm({
             email: "",
@@ -103,7 +104,6 @@ const LoginForm = ({ setReload }: Props) => {
             },
           });
 
-          setReload(true);
           setToggle(false);
         }
       }

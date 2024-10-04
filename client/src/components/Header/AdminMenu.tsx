@@ -1,22 +1,24 @@
+import { DashboardIcon } from "../../assets/svg/DashboardIcon";
 import { logout } from "../../services/authentication";
 
 interface Props {
   username: string;
-  setReload: (value: boolean) => void;
+  setIsLogged: (value: boolean) => void;
 }
 
-const AdminMenu = ({ username, setReload }: Props) => {
+const AdminMenu = ({ username, setIsLogged }: Props) => {
   const handleLogout = async () => {
     window.localStorage.removeItem("loggedUserInfo");
     await logout();
-    setReload(false);
+    setIsLogged(false);
   };
 
   return (
     <div>
-      <div className="dropdown px-5 py-2 rounded-2xl bg-logo-seconday text-white text-xl font-semibold">
-        <div tabIndex={0} role="button" className="">
-          {`Hello, ${username} >`}
+      <div className="dropdown px-5 py-2 rounded-lg bg-logo-seconday text-white text-xl font-semibold">
+        <div tabIndex={0} role="button" className="flex items-center gap-2 text-smcl">
+          {`Welcome ${username}`}
+          <DashboardIcon color={"#fff"} />
         </div>
         <ul
           tabIndex={0}

@@ -25,7 +25,6 @@ export const HeaderProvider = ({ children }: HeaderProviderProps) => {
   const [showRegistration, setShowRegistration] = useState<boolean>(false);
 
   const handleClick = () => {
-    console.log("llmando")
     setToggle(!toggle);
   };
 

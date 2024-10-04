@@ -5,16 +5,26 @@ interface AuthProviderProps {
 }
 
 type AuthContextType = {
-  auth: { username: string; email: string; _id: string };
+  auth:
+    | { username: string; email: string; _id: string; role: string }
+    | undefined;
   setAuth: Dispatch<
-    React.SetStateAction<{ username: string; email: string; _id: string }>
+    React.SetStateAction<
+      | {
+          username: string;
+          email: string;
+          _id: string;
+          role: string;
+        }
+      | undefined
+    >
   >;
   isLogged: boolean;
   setIsLogged: Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AuthContext = createContext<AuthContextType>({
-  auth: { username: "", email: "", _id: "" },
+  auth: undefined,
   setAuth: () => {},
   isLogged: false,
   setIsLogged: () => {},
@@ -23,12 +33,9 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
-  const [auth, setAuth] = useState({
-    username: "",
-    email: "",
-    _id: "",
-  });
-
+  const [auth, setAuth] = useState<
+    { username: string; email: string; _id: string; role: string } | undefined
+  >();
 
   useEffect(() => {
     const userInfoJSON = window.localStorage.getItem("loggedUserInfo");
@@ -39,8 +46,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLogged(true);
     }
   }, []);
-
-
 
   return (
     <AuthContext.Provider value={{ auth, setAuth, isLogged, setIsLogged }}>

@@ -3,20 +3,15 @@ import AdminMenu from "./AdminMenu";
 import RegisterForm from "../RegisterForm";
 import LoginForm from "../LoginForm";
 import Modal from "../Modal";
-import HeaderContext from "../../context/HeaderProvider";
-import { useContext, useState } from "react";
-import AuthContext from "../../context/AuthProvider";
 import Button from "../Button";
+import useAdminMenu from "../../hooks/useAdminMenu";
 
 const Header = () => {
-  const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
-  const { auth, isLogged } = useContext(AuthContext);
-  const [reload, setReload] = useState(false);
-
-  const showAdmin = Boolean(reload) && Boolean(isLogged);
+  const { auth, isLogged, setIsLogged, toggle, showRegistration, handleClick } =
+    useAdminMenu();
 
   return (
-    <div className="bg-light-grey-1">
+    <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.25)]">
       <div className={`flex justify-between items-center wrapper py-4`}>
         <div className="logo-container">
           <Link to="">
@@ -73,18 +68,17 @@ const Header = () => {
               </li>
             </nav>
           </div>
-          {showAdmin ? (
-            <AdminMenu username={auth.username} setReload={setReload} />
+          {isLogged ? (
+            <AdminMenu
+              username={auth ? auth.username : ""}
+              setIsLogged={setIsLogged}
+            />
           ) : (
             <Button onClick={handleClick}>Sign in</Button>
           )}
 
           <Modal isModalOpen={toggle} onClick={handleClick}>
-            {showRegistration ? (
-              <RegisterForm />
-            ) : (
-              <LoginForm setReload={setReload} />
-            )}
+            {showRegistration ? <RegisterForm /> : <LoginForm />}
           </Modal>
         </div>
       </div>
