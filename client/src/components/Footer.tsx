@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import Icons from "./Icons";
 import { useResponsive } from "../hooks/useResponsive";
-
 const Footer = () => {
   const breakpoint = useResponsive([768, 1024, 1310]);
   const isDesktop = breakpoint === 2 || breakpoint === 3;
   const screen = isDesktop ? "w-[75%]" : "w-[90%]"
+
+
 
   return (
     <footer className="bg-light-grey-2">

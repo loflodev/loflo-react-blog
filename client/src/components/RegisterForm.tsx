@@ -3,7 +3,6 @@ import { emailChecker, passwordChercker } from "../helpers/utils";
 import { register } from "../services/authentication";
 import HeaderContext from "../context/HeaderProvider";
 import { ErrorMessage } from "../helpers/types";
-
 interface RegisterFormType {
   username: string;
   email: string;

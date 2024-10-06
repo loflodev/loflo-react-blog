@@ -4,12 +4,14 @@ import RegisterForm from "../RegisterForm";
 import LoginForm from "../LoginForm";
 import Modal from "../Modal";
 import Button from "../Button";
-import useAdminMenu from "../../hooks/useAdminMenu";
+import HeaderContext from "../../context/HeaderProvider";
+import { useContext } from "react";
+import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
-  const { auth, isLogged, setIsLogged, toggle, showRegistration, handleClick } =
-    useAdminMenu();
-
+  const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
+  const { auth, isLogged, setIsLogged } = useAuth();
+  
   return (
     <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.25)]">
       <div className={`flex justify-between items-center wrapper py-4`}>
@@ -28,46 +30,50 @@ const Header = () => {
         </nav>
 
         {/* menu for mobile */}
+
         <div className="flex ml-auto">
-          <div className="lg:hidden dropdown dropdown-bottom dropdown-end mr-5">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          {!isLogged && (
+            <div className="lg:hidden dropdown dropdown-bottom dropdown-end mr-5">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h7"
-                />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-8"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h7"
+                  />
+                </svg>
+              </div>
+              <nav
+                tabIndex={0}
+                className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              >
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/category">Category</Link>
+                </li>
+                <li>
+                  <Link to="/about">About us</Link>
+                </li>
+                <li>
+                  <Link to="/search">Search</Link>
+                </li>
+              </nav>
             </div>
-            <nav
-              tabIndex={0}
-              className="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/category">Category</Link>
-              </li>
-              <li>
-                <Link to="/about">About us</Link>
-              </li>
-              <li>
-                <Link to="/search">Search</Link>
-              </li>
-            </nav>
-          </div>
+          )}
+
           {isLogged ? (
             <AdminMenu
               username={auth ? auth.username : ""}

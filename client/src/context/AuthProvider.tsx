@@ -4,7 +4,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-type AuthContextType = {
+export type AuthContextType = {
   auth:
     | { username: string; email: string; _id: string; role: string }
     | undefined;
@@ -21,6 +21,7 @@ type AuthContextType = {
   >;
   isLogged: boolean;
   setIsLogged: Dispatch<React.SetStateAction<boolean>>;
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -28,11 +29,12 @@ const AuthContext = createContext<AuthContextType>({
   setAuth: () => {},
   isLogged: false,
   setIsLogged: () => {},
+  isLoading: true,
 });
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [auth, setAuth] = useState<
     { username: string; email: string; _id: string; role: string } | undefined
   >();
@@ -45,10 +47,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setAuth(userData);
       setIsLogged(true);
     }
+    setIsLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, isLogged, setIsLogged }}>
+    <AuthContext.Provider
+      value={{ auth, setAuth, isLogged, setIsLogged, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

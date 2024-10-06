@@ -3,7 +3,7 @@ import { login } from "../services/authentication";
 import HeaderContext from "../context/HeaderProvider";
 import { ErrorMessage } from "../helpers/types";
 import { emailChecker } from "../helpers/utils";
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 interface LoginFormType {
   email: string;
@@ -20,7 +20,7 @@ interface LoginFormType {
 
 const LoginForm = () => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
-  const { setAuth, setIsLogged } = useContext(AuthContext);
+  const { setAuth, setIsLogged } = useAuth();
   const [canRegister, setCanRegister] = useState<boolean>(false);
   const [incorrectCredentials, setIncorrectCredentials] =
     useState<ErrorMessage>();
