@@ -11,10 +11,10 @@ import useAuth from "../../hooks/useAuth";
 const Header = () => {
   const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
   const { auth, isLogged, setIsLogged } = useAuth();
-  
+
   return (
-    <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.25)]">
-      <div className={`flex justify-between items-center wrapper py-4`}>
+    <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.5)]">
+      <div className="flex justify-between items-center wrapper py-4">
         <div className="logo-container">
           <Link to="">
             <p className="logo">LofloDev &#x276F;</p>

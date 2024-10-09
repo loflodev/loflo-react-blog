@@ -1,4 +1,4 @@
-import daisyui from 'daisyui';
+import daisyui from "daisyui";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -6,31 +6,32 @@ export default {
   theme: {
     extend: {
       colors: {
-        'logo-primary': '#001858',
-        'logo-seconday': '#6246EA',
-        'base': '#2B2C34',
-        'white': '#FFFFFE',
-        'dark-grey': '#9A9494',
-        'light-grey': '#C0C0C0',
+        "logo-primary": "#001858",
+        "logo-seconday": "#6246EA",
+        base: "#2B2C34",
+        white: "#FFFFFE",
+        "dark-grey": "#9A9494",
+        "light-grey": "#C0C0C0",
+        black: '#2b2c34"',
       },
       fontFamily: {
-        jakarta: ["Plus Jakarta Sans",]
+        jakarta: ["Plus Jakarta Sans"],
       },
       backgroundColor: {
-        'white': '#FFFFFE',
-        'light-grey-1': '#EFF0F3', 
-        'light-grey-2': '#E4E5E9',
-        'logo-primary': '#001858',
-        'btn-hover': '#4d7dff',
+        white: "#FFFFFE",
+        "light-grey-1": "#EFF0F3",
+        "light-grey-2": "#E4E5E9",
+        "logo-primary": "#001858",
+        "btn-hover": "#4d7dff",
       },
       screens: {
-        's-mb': {'max': '767px'},
+        "s-mb": { max: "767px" },
         // => @media (min-width: 375px and max-width: 767px) { ... }
-    
-        's-tb': {'min': '768px', 'max': '1023px'},
+
+        "s-tb": { min: "768px", max: "1023px" },
         // => @media (min-width: 768px and max-width: 1023px) { ... }
-    
-        's-dk': {'min': '1024px'},
+
+        "s-dk": { min: "1024px" },
         // => @media (min-width: 1024px) { ... }
       },
     },

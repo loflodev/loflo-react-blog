@@ -9,11 +9,12 @@
   font-optical-sizing: auto;
   font-style: normal;
   color: #2b2c34;
+
 }
 
 @layer components {
   .wrapper {
-    @apply w-[85%] m-auto;
+    @apply w-[85%] m-auto bg-transparent;
   }
   .logo {
     @apply font-semibold text-4xl text-logo-primary leading-5;
@@ -54,6 +55,42 @@
   .article-grid {
     @apply grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] auto-rows-[516px] gap-[50px] justify-between pt-12;
   }
+  th {
+    @apply text-[1rem] leading-[1.5rem];
+  }
+
+}
+
+.d-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+  gap: 20px;
+}
+.sidebar {
+  grid-row: 2/5;
+}
+.d-header {
+  display: flex;
+  flex-direction: column;
+  grid-column: 2/-1;
+  gap: 12px;
+}
+.d-cards {
+  grid-column: 2/-1;
+}
+.d-posts-header {
+  grid-column: 2/-1;
+}
+.d-post-list {
+  grid-column: 2/-1;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: auto;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -71,9 +108,9 @@
 
 @media (min-width: 1025px) {
   .dash-menu {
-   display: none;
+    display: none;
   }
- }
+}
 
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
 }

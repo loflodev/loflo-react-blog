@@ -4,7 +4,9 @@ import { HeaderProvider } from "../../context/HeaderProvider";
 const NavigationBar = () => {
   return (
     <HeaderProvider>
-      <Header />
+      <div className="relative">
+        <Header />
+      </div>
     </HeaderProvider>
   );
 };
