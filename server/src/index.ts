@@ -11,6 +11,7 @@ const app = express();
 
 app.use(
   cors({
+    origin: "http://localhost:5173",
     credentials: true,
     optionsSuccessStatus: 200,
   })
@@ -21,8 +22,10 @@ app.use(bodyParser.json());
 
 const server = http.createServer(app);
 
-server.listen(8080, () => {
-  console.log("server is running on http://localhost:8080");
+const PORT = process.env.PORT || 8080
+
+server.listen(PORT, () => {
+  console.log(`server is running on http://localhost:${8080}`);
 });
 
 const MONGO_URL =

@@ -87,10 +87,9 @@ export const deletePost = async (
 ) => {
   try {
     const { id } = req.params;
-    const { author } = req.body;
 
-    if (!id || !author) {
-      return res.sendStatus(400);
+    if (!id) {
+      return res.sendStatus(400).json({ message: "Required id" });
     }
 
     const postExist = await getPostById(id);
@@ -99,14 +98,11 @@ export const deletePost = async (
       return res.sendStatus(400).json({ message: "Post not found" });
     }
 
-    const postAuthor = postExist.author === author;
-
-    if (!postAuthor) {
-      return res.sendStatus(400).json({ message: "Your are not allowed" });
-    }
-
     const deleteResponse = await deletePostById(id);
 
     return res.status(200).json({ message: "Successfuly delete" });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
 };

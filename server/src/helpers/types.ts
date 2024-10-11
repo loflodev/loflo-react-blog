@@ -1,4 +1,6 @@
-export type Role = "admin" | "suscriber";
+export type Roles = "admin" | "suscriber";
+
+export type AllowedRoles = Roles[]
 
 export interface Authentication {
   password: string;
@@ -10,7 +12,7 @@ export interface User {
   username: string;
   email: string;
   authentication: Authentication;
-  role: Role;
+  role: Roles;
 }
 export interface Post {
   title: string;
