@@ -3,7 +3,6 @@ import { login } from "../services/authentication";
 import HeaderContext from "../context/HeaderProvider";
 import { ErrorMessage } from "../helpers/types";
 import { emailChecker } from "../helpers/utils";
-import useAuth from "../hooks/useAuth";
 
 interface LoginFormType {
   email: string;
@@ -20,10 +19,11 @@ interface LoginFormType {
 
 const LoginForm = () => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
-  const { setAuth, setIsLogged } = useAuth();
   const [canRegister, setCanRegister] = useState<boolean>(false);
   const [incorrectCredentials, setIncorrectCredentials] =
     useState<ErrorMessage>();
+
+
 
   const [signInForm, setSignInForm] = useState<LoginFormType>({
     email: "",
@@ -82,13 +82,6 @@ const LoginForm = () => {
         setIncorrectCredentials("Incorrect email or password");
 
         if (userData) {
-          window.localStorage.setItem(
-            "loggedUserInfo",
-            JSON.stringify(userData)
-          );
-
-          setIsLogged(true);
-          setAuth(userData);
 
           setIncorrectCredentials(undefined);
           setSignInForm({

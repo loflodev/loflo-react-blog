@@ -1,58 +1,45 @@
-import { createContext, Dispatch, ReactNode, useEffect, useState } from "react";
+import { createContext, Dispatch, ReactNode, useState } from "react";
+import { usePersistentLogin } from "../hooks/usePersistentLogin";
+import { User } from "../helpers/types";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 export type AuthContextType = {
-  auth:
-    | { username: string; email: string; _id: string; role: string }
-    | undefined;
-  setAuth: Dispatch<
-    React.SetStateAction<
-      | {
-          username: string;
-          email: string;
-          _id: string;
-          role: string;
-        }
-      | undefined
-    >
-  >;
+  user: Omit<User, "password"> | null;
+  setUser: Dispatch<React.SetStateAction<Omit<User, "password"> | null>>;
   isLogged: boolean;
   setIsLogged: Dispatch<React.SetStateAction<boolean>>;
-  isLoading: boolean;
+  loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
-  auth: undefined,
-  setAuth: () => {},
+  user: null,
+  setUser: () => {},
   isLogged: false,
   setIsLogged: () => {},
-  isLoading: true,
+  loading: true,
 });
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [auth, setAuth] = useState<
-    { username: string; email: string; _id: string; role: string } | undefined
-  >();
+  const { user, setUser, loading } = usePersistentLogin();
 
-  useEffect(() => {
-    const userInfoJSON = window.localStorage.getItem("loggedUserInfo");
+  // useEffect(() => {
+  //   const userInfoJSON = window.localStorage.getItem("loggedUserInfo");
 
-    if (userInfoJSON) {
-      const userData = JSON.parse(userInfoJSON);
-      setAuth(userData);
-      setIsLogged(true);
-    }
-    setIsLoading(false);
-  }, []);
+  //   if (userInfoJSON) {
+  //     const userData = JSON.parse(userInfoJSON);
+  //     setUser(userData);
+  //     setIsLogged(true);
+  //   }
+  //   setLoading(false);
+  // }, []);
 
   return (
     <AuthContext.Provider
-      value={{ auth, setAuth, isLogged, setIsLogged, isLoading }}
+      value={{ user, setUser, isLogged, setIsLogged, loading }}
     >
       {children}
     </AuthContext.Provider>

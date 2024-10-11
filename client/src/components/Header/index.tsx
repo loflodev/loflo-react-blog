@@ -10,7 +10,9 @@ import useAuth from "../../hooks/useAuth";
 
 const Header = () => {
   const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
-  const { auth, isLogged, setIsLogged } = useAuth();
+  const { user } = useAuth();
+
+  console.log(user)
 
   return (
     <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.5)]">
@@ -32,7 +34,7 @@ const Header = () => {
         {/* menu for mobile */}
 
         <div className="flex ml-auto">
-          {!isLogged && (
+          {!user && (
             <div className="lg:hidden dropdown dropdown-bottom dropdown-end mr-5">
               <div
                 tabIndex={0}
@@ -74,10 +76,9 @@ const Header = () => {
             </div>
           )}
 
-          {isLogged ? (
+          {user ? (
             <AdminMenu
-              username={auth ? auth.username : ""}
-              setIsLogged={setIsLogged}
+              username={user ? user.username : ""}
             />
           ) : (
             <Button onClick={handleClick}>Sign in</Button>

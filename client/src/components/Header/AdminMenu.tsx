@@ -5,14 +5,12 @@ import { logout } from "../../services/authentication";
 
 interface Props {
   username: string;
-  setIsLogged: (value: boolean) => void;
 }
 
-const AdminMenu = ({ username, setIsLogged }: Props) => {
+const AdminMenu = ({ username }: Props) => {
   const handleLogout = async () => {
     window.localStorage.removeItem("loggedUserInfo");
     await logout();
-    setIsLogged(false);
   };
 
   return (

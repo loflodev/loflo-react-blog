@@ -10,7 +10,7 @@ type Credential = {
 export const login = async (credential: Credential) => {
   try {
     const { data } = await axios.post("/auth/login", credential);
-    
+
     return data;
   } catch (error) {
     console.error(error);
@@ -44,6 +44,15 @@ export const logout = async () => {
   try {
     const response = await axios.post("/auth/logout");
     return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const checkAuth = async () => {
+  try {
+    const { data } = await axios.get("/auth/check-auth");
+    return data;
   } catch (error) {
     console.error(error);
   }
