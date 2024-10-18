@@ -6,13 +6,12 @@ import Modal from "../Modal";
 import Button from "../Button";
 import HeaderContext from "../../context/HeaderProvider";
 import { useContext } from "react";
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
+import { usePersistentLogin } from "../../hooks/usePersistentLogin";
 
 const Header = () => {
   const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
-  const { user } = useAuth();
-
-  console.log(user)
+  const { user, isLogged } = usePersistentLogin();
 
   return (
     <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.5)]">
@@ -76,12 +75,12 @@ const Header = () => {
             </div>
           )}
 
-          {user ? (
-            <AdminMenu
-              username={user ? user.username : ""}
-            />
+          {isLogged ? (
+            <AdminMenu username={user ? user.username : ""} />
           ) : (
-            <Button onClick={handleClick}>Sign in</Button>
+            <Button size={4} onClick={handleClick}>
+              Sign in
+            </Button>
           )}
 
           <Modal isModalOpen={toggle} onClick={handleClick}>

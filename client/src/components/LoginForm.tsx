@@ -1,8 +1,13 @@
-import { useState, ChangeEvent, useContext } from "react";
-import { login } from "../services/authentication";
+import { useState, ChangeEvent, useContext, useCallback } from "react";
 import HeaderContext from "../context/HeaderProvider";
 import { ErrorMessage } from "../helpers/types";
-import { emailChecker } from "../helpers/utils";
+import {
+  canRegister,
+  emailChecker,
+  passwordLengthChecker,
+} from "../helpers/utils";
+import { usePersistentLogin } from "../hooks/usePersistentLogin";
+import Button from "../components/Button";
 
 interface LoginFormType {
   email: string;
@@ -19,11 +24,10 @@ interface LoginFormType {
 
 const LoginForm = () => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
-  const [canRegister, setCanRegister] = useState<boolean>(false);
+  const { signIn, setIsLogged } = usePersistentLogin();
+  const [trig, setTrig] = useState(false);
   const [incorrectCredentials, setIncorrectCredentials] =
     useState<ErrorMessage>();
-
-
 
   const [signInForm, setSignInForm] = useState<LoginFormType>({
     email: "",
@@ -38,72 +42,78 @@ const LoginForm = () => {
     },
   });
 
-  const handleSignInForm = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSignInForm = async (event: ChangeEvent<HTMLInputElement>) => {
     setSignInForm((prevSignData) => ({
       ...prevSignData,
       [event.target.name]: event.target.value,
     }));
   };
 
-  const handleSubmit = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      event.preventDefault();
 
-    const email = emailChecker(signInForm.email);
+      const email = emailChecker(signInForm.email);
+      const isPasswordValid = passwordLengthChecker(signInForm.password);
 
-    setSignInForm((prevData) => {
-      return {
-        ...prevData,
-        email: email.isValid ? email.input : "",
-        password: prevData.password.length < 3 ? "" : prevData.password,
-        errorMessage: {
-          email: email.isValid ? undefined : "Email is incorrect",
-          password:
-            prevData.password.length < 3 ? "Password is too short" : undefined,
-        },
-        inputFocus: {
-          email: email.isValid ? "ring-gray-300" : "ring-red-600",
-          password:
-            prevData.password.length < 3 ? "ring-red-600" : "ring-gray-300",
-        },
-      };
-    });
+      const canSubmit = canRegister(email.isValid, isPasswordValid);
 
-    setCanRegister(email.isValid && Boolean(signInForm.password));
+      setSignInForm((prevData) => {
+        return {
+          ...prevData,
+          errorMessage: {
+            email: email.isValid ? undefined : "Email is incorrect",
+            password: isPasswordValid ? undefined : "Password is too short",
+          },
+          inputFocus: {
+            email: email.isValid ? "ring-gray-300" : "ring-red-600",
+            password: isPasswordValid ? "ring-gray-300" : "ring-red-600",
+          },
+        };
+      });
 
-    try {
-      if (canRegister) {
-        const userData = await login({
-          email: signInForm.email,
-          password: signInForm.password,
-        });
+      if (canSubmit) {
+        try {
+          const response = await signIn(signInForm.email, signInForm.password);
 
-        setIncorrectCredentials("Incorrect email or password");
+          if (response?.status === 200) {
+            setIsLogged(true);
+            setTrig(true);
+            console.log(trig);
 
-        if (userData) {
-
-          setIncorrectCredentials(undefined);
-          setSignInForm({
-            email: "",
-            password: "",
-            errorMessage: {
-              email: undefined,
-              password: undefined,
-            },
-            inputFocus: {
-              email: "ring-gray-300",
-              password: "ring-gray-300",
-            },
-          });
-
-          setToggle(false);
+            setIncorrectCredentials(undefined);
+            setSignInForm({
+              email: "",
+              password: "",
+              errorMessage: {
+                email: undefined,
+                password: undefined,
+              },
+              inputFocus: {
+                email: "ring-gray-300",
+                password: "ring-gray-300",
+              },
+            });
+            setToggle(false);
+            window.location.reload(); 
+          } else {
+            setIncorrectCredentials("Incorrect email or password");
+          }
+        } catch (error) {
+          console.error("Sign in error:", error);
+          setIncorrectCredentials("An error occurred during sign in");
         }
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    },
+    [
+      setIsLogged,
+      setToggle,
+      signIn,
+      signInForm.email,
+      signInForm.password,
+      trig,
+    ]
+  );
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -134,7 +144,7 @@ const LoginForm = () => {
                 value={signInForm.email}
               />
             </div>
-            {!canRegister && (
+            {signInForm.errorMessage.email && (
               <p className="text-red-600">{signInForm.errorMessage.email}</p>
             )}
           </div>
@@ -168,19 +178,19 @@ const LoginForm = () => {
                 required
               />
             </div>
-            {!canRegister && (
+            {signInForm.errorMessage.password && (
               <p className="text-red-600">{signInForm.errorMessage.password}</p>
             )}
           </div>
 
           <div>
-            <button
+            <Button
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={(event) => handleSubmit(event)}
+              onClick={handleSubmit}
             >
               Sign in
-            </button>
+            </Button>
             {incorrectCredentials && (
               <p className="text-red-600">{incorrectCredentials}</p>
             )}

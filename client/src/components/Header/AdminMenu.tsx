@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import { DashboardIcon } from "../../assets/svg/DashboardIcon";
 import { LogoutIcon } from "../../assets/svg/LogoutIcon";
-import { logout } from "../../services/authentication";
+import { usePersistentLogin } from "../../hooks/usePersistentLogin";
 
 interface Props {
   username: string;
 }
 
 const AdminMenu = ({ username }: Props) => {
+  const { signOut } = usePersistentLogin();
   const handleLogout = async () => {
-    window.localStorage.removeItem("loggedUserInfo");
-    await logout();
+    signOut();
   };
 
   return (

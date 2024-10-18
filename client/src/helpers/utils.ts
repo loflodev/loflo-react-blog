@@ -38,3 +38,14 @@ export const passwordChercker = (
     };
   }
 };
+
+export const passwordLengthChecker = (password: string): boolean => {
+  return password.length >= 3 ? true : false;
+};
+
+export const canRegister = (
+  validEmail: boolean,
+  validPassword: boolean
+): boolean => {
+  return Boolean(validEmail && validPassword);
+};

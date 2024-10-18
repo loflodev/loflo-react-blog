@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, useState } from "react";
+import { createContext, ReactNode } from "react";
 import { usePersistentLogin } from "../hooks/usePersistentLogin";
 import { User } from "../helpers/types";
 
@@ -8,38 +8,26 @@ interface AuthProviderProps {
 
 export type AuthContextType = {
   user: Omit<User, "password"> | null;
-  setUser: Dispatch<React.SetStateAction<Omit<User, "password"> | null>>;
   isLogged: boolean;
-  setIsLogged: Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  setUser: () => {},
   isLogged: false,
-  setIsLogged: () => {},
   loading: true,
 });
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isLogged, setIsLogged] = useState<boolean>(false);
-  const { user, setUser, loading } = usePersistentLogin();
-
-  // useEffect(() => {
-  //   const userInfoJSON = window.localStorage.getItem("loggedUserInfo");
-
-  //   if (userInfoJSON) {
-  //     const userData = JSON.parse(userInfoJSON);
-  //     setUser(userData);
-  //     setIsLogged(true);
-  //   }
-  //   setLoading(false);
-  // }, []);
+  const { user, loading, isLogged } = usePersistentLogin();
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, isLogged, setIsLogged, loading }}
+      value={{
+        user,
+        isLogged,
+        loading,
+      }}
     >
       {children}
     </AuthContext.Provider>

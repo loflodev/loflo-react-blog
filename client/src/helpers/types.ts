@@ -7,6 +7,7 @@ export type ErrorMessage =
   | "username is too short"
   | "Password is too short"
   | "Incorrect email or password"
+  | "An error occurred during sign in"
   | undefined;
 
 export type InputValidationType = {

@@ -2,15 +2,14 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const Authenticated = () => {
-  const { user: auth, isLoading } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
-  console.log(auth);
 
-  if (isLoading) {
+  if (loading) {
     return null;
   }
 
-  return auth ? (
+  return user ? (
     <Outlet />
   ) : (
     <Navigate to="/" state={{ from: location }} replace />

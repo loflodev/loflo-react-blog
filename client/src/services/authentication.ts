@@ -9,9 +9,9 @@ type Credential = {
 
 export const login = async (credential: Credential) => {
   try {
-    const { data } = await axios.post("/auth/login", credential);
+    const response = await axios.post("/auth/login", credential);
 
-    return data;
+    return response;
   } catch (error) {
     console.error(error);
   }
