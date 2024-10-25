@@ -6,12 +6,15 @@ import Modal from "../Modal";
 import Button from "../Button";
 import HeaderContext from "../../context/HeaderProvider";
 import { useContext } from "react";
-// import useAuth from "../../hooks/useAuth";
 import { usePersistentLogin } from "../../hooks/usePersistentLogin";
 
 const Header = () => {
   const { handleClick, toggle, showRegistration } = useContext(HeaderContext);
-  const { user, isLogged } = usePersistentLogin();
+  const { signOut, user, isLogged, setIsLogged } = usePersistentLogin();
+
+  const logout = async () => {
+    await signOut();
+  };
 
   return (
     <div className="bg-light-grey-1 shadow-[4px_6px_13px_rgba(215,215,215,0.5)]">
@@ -75,16 +78,18 @@ const Header = () => {
             </div>
           )}
 
-          {isLogged ? (
-            <AdminMenu username={user ? user.username : ""} />
+          {isLogged && user ? (
+            <AdminMenu user={user} logout={logout} />
           ) : (
-            <Button size={4} onClick={handleClick}>
-              Sign in
-            </Button>
+            <Button onClick={handleClick}>Sign in</Button>
           )}
 
           <Modal isModalOpen={toggle} onClick={handleClick}>
-            {showRegistration ? <RegisterForm /> : <LoginForm />}
+            {showRegistration ? (
+              <RegisterForm />
+            ) : (
+              <LoginForm setIsLogged={setIsLogged} />
+            )}
           </Modal>
         </div>
       </div>

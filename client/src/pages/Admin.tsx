@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DashboardHeader from "../components/Dashboard/DashboardHeader";
 import DashboardMenu from "../components/Dashboard/DashboardMenu";
-import { DashboardStats } from "../components/Dashboard/DashboardStats";
+
 import RenderActiveOption from "../components/Dashboard/RenderActiveOption";
 
 export type MenuOptions = "postPanel" | "postEditor" | "newPost" | "profile";
@@ -15,8 +15,6 @@ const Admin = () => {
           <DashboardMenu setActiveOption={setActiveOption} />
 
           <DashboardHeader />
-
-          <DashboardStats />
 
           <RenderActiveOption activeOption={activeOption} />
         </div>

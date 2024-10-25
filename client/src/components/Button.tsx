@@ -9,7 +9,7 @@ const Button = ({ children, fitContent, size = 2, ...rest }: ButtonProps) => {
 
   return (
     <button
-      className={`${fullWidth} bg-[#6246EA] hover:bg-btn-hover text-white text-lg font-bold rounded-md leading-6 px-4 py-${size} capitalize signin-btn`}
+      className={`bg-[#6246EA] hover:bg-btn-hover text-white text-lg font-bold rounded-md leading-6 px-4 py-${size} capitalize signin-btn ${fullWidth}`}
       {...rest}
     >
       {children}

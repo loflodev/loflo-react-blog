@@ -6,8 +6,8 @@ import {
   emailChecker,
   passwordLengthChecker,
 } from "../helpers/utils";
-import { usePersistentLogin } from "../hooks/usePersistentLogin";
 import Button from "../components/Button";
+import { usePersistentLogin } from "../hooks/usePersistentLogin";
 
 interface LoginFormType {
   email: string;
@@ -22,10 +22,13 @@ interface LoginFormType {
   };
 }
 
-const LoginForm = () => {
+interface Props {
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const LoginForm = ({ setIsLogged }: Props) => {
   const { setShowRegistration, setToggle } = useContext(HeaderContext);
-  const { signIn, setIsLogged } = usePersistentLogin();
-  const [trig, setTrig] = useState(false);
+  const { signIn } = usePersistentLogin();
   const [incorrectCredentials, setIncorrectCredentials] =
     useState<ErrorMessage>();
 
@@ -77,9 +80,14 @@ const LoginForm = () => {
           const response = await signIn(signInForm.email, signInForm.password);
 
           if (response?.status === 200) {
+            // const { _id, username, email, role } = response.data;
+
+            // window.localStorage.setItem(
+            //   "loggedUserInfo",
+            //   JSON.stringify({ _id, username, email, role })
+            // );
+
             setIsLogged(true);
-            setTrig(true);
-            console.log(trig);
 
             setIncorrectCredentials(undefined);
             setSignInForm({
@@ -95,7 +103,7 @@ const LoginForm = () => {
               },
             });
             setToggle(false);
-            window.location.reload(); 
+            window.location.reload();
           } else {
             setIncorrectCredentials("Incorrect email or password");
           }
@@ -105,14 +113,7 @@ const LoginForm = () => {
         }
       }
     },
-    [
-      setIsLogged,
-      setToggle,
-      signIn,
-      signInForm.email,
-      signInForm.password,
-      trig,
-    ]
+    [setIsLogged, setToggle, signIn, signInForm.email, signInForm.password]
   );
 
   return (

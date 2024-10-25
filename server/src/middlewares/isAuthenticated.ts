@@ -3,7 +3,11 @@ import { getUserBySessionToken } from "../db/user";
 import { rateLimit } from "express-rate-limit";
 import { createLogger, format, transports } from "winston";
 import { User } from "helpers/types";
-import { AUTH_COOKIE_NAME, MAX_REQUESTS, WINDOW_MS } from "../helpers/constants";
+import {
+  AUTH_COOKIE_NAME,
+  MAX_REQUESTS,
+  WINDOW_MS,
+} from "../helpers/constants";
 
 // Logger configuration
 const logger = createLogger({
@@ -34,15 +38,29 @@ export const auth = async (
   next: NextFunction
 ) => {
   try {
-    const sessionToken = req.cookies[AUTH_COOKIE_NAME];
+    let sessionToken: string | undefined;
 
-    console.log(sessionToken);
+    // Check for token in cookie
+    if (req.cookies[AUTH_COOKIE_NAME]) {
+      sessionToken = req.cookies[AUTH_COOKIE_NAME];
+      logger.info("Token found in cookie");
+    }
+
+    // const sessionToken = req.cookies[AUTH_COOKIE_NAME];
+    if (!sessionToken && req.headers.authorization) {
+      const authHeader = req.headers.authorization;
+      const [bearer, token] = authHeader.split(" ");
+      if (bearer === "Bearer" && token) {
+        sessionToken = token;
+        logger.info("Token found in Authorization header");
+      }
+    }
 
     if (!sessionToken) {
       logger.warn("Authentication failed: No session token provided");
       return res.status(401).json({ error: "Authentication required" });
     }
-
+    console.log("token: ", sessionToken);
     const existingUser = await getUserBySessionToken(sessionToken);
 
     if (!existingUser) {

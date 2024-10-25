@@ -1,0 +1,8 @@
+{"level":"info","message":"Token found in Authorization header","timestamp":"2024-10-24T03:00:57.596Z"}
+{"level":"warn","message":"Authentication failed: Invalid session token","timestamp":"2024-10-24T03:00:57.657Z"}
+{"level":"info","message":"Token found in Authorization header","timestamp":"2024-10-24T03:00:57.684Z"}
+{"level":"warn","message":"Authentication failed: Invalid session token","timestamp":"2024-10-24T03:00:57.743Z"}
+{"level":"info","message":"Token found in Authorization header","timestamp":"2024-10-24T03:00:57.767Z"}
+{"level":"warn","message":"Authentication failed: Invalid session token","timestamp":"2024-10-24T03:00:57.826Z"}
+{"level":"info","message":"Token found in Authorization header","timestamp":"2024-10-24T03:00:57.849Z"}
+{"level":"warn","message":"Authentication failed: Invalid session token","timestamp":"2024-10-24T03:00:57.908Z"}

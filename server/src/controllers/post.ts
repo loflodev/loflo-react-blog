@@ -64,6 +64,45 @@ export const createPost = async (
   }
 };
 
+export const createAutoPost = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const {
+      title,
+      content,
+      author,
+      category,
+      tags,
+      cover,
+      view,
+      createAt,
+      token,
+    } = req.body;
+
+    if (!title || !content || !author || !token) {
+      return res.sendStatus(400);
+    }
+
+    const postResponse = await savePost({
+      title,
+      content,
+      author,
+      category,
+      tags,
+      cover,
+      view,
+      createAt,
+    });
+
+    return res.status(200).json({ message: "Post save successfuly" }).end();
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+};
+
 export const updatePost = async (
   req: express.Request,
   res: express.Response

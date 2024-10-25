@@ -139,9 +139,12 @@ export const checkAuth = async (
 
     const user = await getUserBySessionToken(sessionToken);
 
+    
+
     if (!user) {
-      res.status(401).json({ error: "Invalid session" });
+      return res.status(401).json({ error: "Invalid session" });
     }
+
 
     return res.status(200).json({
       _id: user._id,

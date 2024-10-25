@@ -12,12 +12,18 @@ export const usePersistentLogin = () => {
     setLoading(true);
 
     try {
+      const userInfo = window.localStorage.getItem("loggedUserInfo");
       const data = await checkAuth();
+
+      if (!userInfo) {
+        window.localStorage.setItem("loggedUserInfo", JSON.stringify(data));
+      }
 
       setUser(data);
       setIsLogged(true);
     } catch (error) {
       setUser(null);
+      window.localStorage.removeItem("loggedUserInfo");
       setIsLogged(false);
     } finally {
       setLoading(false);
@@ -60,7 +66,9 @@ export const usePersistentLogin = () => {
 
   const signOut = useCallback(async () => {
     try {
-      const res = await logout();
+      await logout();
+
+      window.localStorage.removeItem("loggedUserInfo");
 
       setUser(null);
       setIsLogged(false);
@@ -68,6 +76,13 @@ export const usePersistentLogin = () => {
       console.log(error);
     }
   }, []);
+
+  useEffect(() => {
+    if (!isLogged) {
+      // Force a re-render and update any components that depend on isLogged
+      window.dispatchEvent(new Event("storage"));
+    }
+  }, [isLogged]);
 
   return {
     user,
