@@ -6,6 +6,7 @@ import {
   updatePostById,
 } from "../db/post";
 import express from "express";
+import { generateBlogPost } from "../services/openai";
 
 export const getPostList = async (
   req: express.Request,
@@ -69,37 +70,41 @@ export const createAutoPost = async (
   res: express.Response
 ) => {
   try {
-    const {
-      title,
-      content,
-      author,
-      category,
-      tags,
-      cover,
-      view,
-      createAt,
-      token,
-    } = req.body;
+    const { category, topic, author, token } = req.body;
 
-    if (!title || !content || !author || !token) {
-      return res.sendStatus(400);
+    if (!author || !token) {
+      return res.status(400).json({ error: "Author and token are required" });
     }
 
-    const postResponse = await savePost({
-      title,
-      content,
-      author,
-      category,
-      tags,
-      cover,
-      view,
-      createAt,
+    // Generate blog post using OpenAI
+    const generatedPost = await generateBlogPost({
+      category: category || "Technology",
+      topic: topic
     });
 
-    return res.status(200).json({ message: "Post save successfuly" }).end();
+    // Save the generated post
+    const postResponse = await savePost({
+      title: generatedPost.title,
+      content: generatedPost.content,
+      author,
+      category: category || "Technology",
+      tags: generatedPost.tags,
+      cover: "",
+      view: 0,
+      createAt: new Date(),
+      updateAt: new Date()
+    });
+
+    return res.status(200).json({
+      message: "AI post generated and saved successfully",
+      post: postResponse
+    });
   } catch (error) {
     console.log(error);
-    return res.sendStatus(400);
+    return res.status(400).json({
+      error: "Failed to generate or save post",
+      details: error.message
+    });
   }
 };
 

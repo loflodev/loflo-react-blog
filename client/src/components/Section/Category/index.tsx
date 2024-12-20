@@ -1,14 +1,14 @@
 import CategoryCard from "./CategoryCard";
 import SectionHeader from "../Header";
-import { IconsType, Post } from "../../../helpers/types";
+import {  Post } from "../../../helpers/types";
 
 interface Props {
-  categories: Post["category"][];
+  categories?: Post["category"][];
 }
 
-const Category = ({ categories }: Props) => {
+const Category = ({ }: Props) => {
   const title = { name: "Browse the category", filter: "see all category" };
-  const filterCategories = [...new Set(categories)];
+  // const filterCategories = [...new Set(categories)];
   return (
     <section className="bg-light-grey-1 py-[68px]">
       <div className="wrapper">
@@ -16,11 +16,11 @@ const Category = ({ categories }: Props) => {
           <SectionHeader title={title} />
         </div>
         <div className="category-grid">
-          {filterCategories &&
+          {/* {filterCategories &&
             filterCategories.map((category: IconsType) => (
               <CategoryCard icon={category} />
             ))}
-          {!filterCategories && (
+          {!filterCategories && ( */}
             <>
               <CategoryCard icon="css" />
               <CategoryCard icon="js" />
@@ -28,7 +28,7 @@ const Category = ({ categories }: Props) => {
               <CategoryCard icon="vue" />
               <CategoryCard icon="react" />
             </>
-          )}
+          
         </div>
       </div>
     </section>

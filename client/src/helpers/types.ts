@@ -24,7 +24,7 @@ export interface User {
   role: Role;
 }
 
-export type IconsType = "css" | "js" | "react" | "tailwind" | "vue";
+export type IconsType = "css" | "js" | "react" | "tailwind" | "vue" ;
 
 export interface Post {
   _id: string;

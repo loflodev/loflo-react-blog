@@ -7,7 +7,7 @@ import { IconsType } from "../../../helpers/types";
 
 
 type Props = {
-  icon: IconsType;
+  icon: IconsType ;
 };
 
 type IconRenderType = {

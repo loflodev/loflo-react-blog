@@ -6,9 +6,15 @@ import post from "./post"
 const router = express.Router();
 
 export default (): express.Router => {
-  authentication(router);
-  users(router);
-  post(router);
-
-  return router;
+  try {
+    console.log('Setting up routes...');
+    authentication(router);
+    users(router);
+    post(router);
+    console.log('Routes set up successfully');
+    return router;
+  } catch (error) {
+    console.error('Error setting up routes:', error);
+    throw error;
+  }
 };
