@@ -5,16 +5,21 @@ type Props = {
     name: string;
     date: string;
     read: string | undefined;
-  };
+  },
+  layout?: {
+    iconSize: number,
+    flexDirection: string
+  }
 };
-const AuthorCard = ({ authorInfo }: Props) => {
+const AuthorCard = ({ authorInfo, layout }: Props) => {
+  const { iconSize, flexDirection } = layout || {};
   return (
     <>
-      <div className="w-14 h-14 rounded-full">
+      <div className={`w-${iconSize ? iconSize : 14} h-${iconSize ? iconSize : 14} rounded-full ${iconSize} mr-4`}>
         <img src={persona} alt="author of article" />
       </div>
-      <div className="pl-3">
-        <p className="author-name">{authorInfo.name}</p>
+      <div className={`${flexDirection}  id="pl-3`}>
+        <p className="author-name mr-2">{authorInfo.name}</p>
         <p className="author-date">{` ${authorInfo.date} ∙ ${authorInfo.read}`}</p>
       </div>
     </>

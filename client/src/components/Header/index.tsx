@@ -29,7 +29,7 @@ const Header = () => {
         <nav className="hidden lg:flex justify-end font-bold text-xl gap-12 grow mr-12">
           <Link to="/">Home</Link>
           <Link to="/category">Category</Link>
-          <Link to="/about">About Us</Link>
+          <Link to="/blog">Blog</Link>
           <Link to="/search">Search</Link>
         </nav>
 
@@ -69,7 +69,7 @@ const Header = () => {
                   <Link to="/category">Category</Link>
                 </li>
                 <li>
-                  <Link to="/about">About us</Link>
+                  <Link to="/blog">Blog</Link>
                 </li>
                 <li>
                   <Link to="/search">Search</Link>

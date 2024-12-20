@@ -1,6 +1,6 @@
 import Home from "./pages/Home";
 import Search from "./pages/Search";
-import About from "./pages/About";
+import Blog from "./pages/Blog";
 import PostDetail from "./pages/PostDetail";
 import Category from "./pages/Category";
 import Admin from "./pages/Admin";
@@ -14,7 +14,7 @@ function App() {
       <Route element={<PageLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/category" element={<Category />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/blog" element={<Blog />} />
         <Route path="/search" element={<Search />} />
         <Route path="/post/:id" element={<PostDetail />} />
 

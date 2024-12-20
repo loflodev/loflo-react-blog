@@ -15,13 +15,22 @@ const PostDetail = () => {
     );
   }, [post]);
 
+  const AuthorLayout = useMemo(() => {
+    return (
+      {
+        iconSize: 8,
+        flexDirection: "flex items-center",
+      }
+    );
+  }, [post]);
+
   return post ? (
     <div>
       <div className="wrapper">
-        <div className="flex flex-col gap-10 pt-20">
-          <h4>{post.title}</h4>
+        <div className="flex flex-col gap-5 pt-20 items-center">
+          <h5 className="text-center">{post.title}</h5>
           <div className="flex items-center">
-            {authorInfo && <AuthorCard authorInfo={authorInfo} />}
+            {authorInfo && <AuthorCard authorInfo={authorInfo} layout={AuthorLayout} />}
           </div>
 
           <div className="post-image w-full h-[530px]">

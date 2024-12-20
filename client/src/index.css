@@ -33,6 +33,9 @@
   h4 {
     @apply font-bold text-4xl leading-6 s-mb:text-sm;
   }
+  h5 {
+    @apply font-bold text-4xl s-mb:text-sm;
+  }
   .paragraph {
     @apply text-xl text-dark-grey leading-6 border-l-4 border-base border-solid pl-2;
   }

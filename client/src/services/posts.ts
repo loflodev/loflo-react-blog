@@ -1,8 +1,9 @@
 import axios from "../api/axios";
+import { GetPostsParams } from "../hooks/useFetchPosts";
 
-export const getPostList = async () => {
+export const getPostList = async (params: GetPostsParams = {}) => {
   try {
-    const response = await axios.get("/post");
+    const response = await axios.get("/post", { params });
 
     return response;
   } catch (error) {

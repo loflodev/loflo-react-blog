@@ -13,12 +13,23 @@ export const getPostList = async (
   res: express.Response
 ) => {
   try {
-    const posts = await getPosts();
+    const { page = '1', limit = '10', search = '', category = '' } = req.query;
 
-    return res.status(200).json(posts);
+    // Convert page and limit to numbers and validate
+    const pageNum = Math.max(1, parseInt(page as string));
+    const limitNum = Math.min(50, Math.max(1, parseInt(limit as string))); // Cap at 50 items per page
+
+    const result = await getPosts({
+      page: pageNum,
+      limit: limitNum,
+      search: search as string,
+      category: category as string
+    });
+
+    return res.status(200).json(result);
   } catch (error) {
-    console.log(error);
-    return res.sendStatus(400);
+    console.error('Error getting posts:', error);
+    return res.status(400).json({ error: 'Failed to fetch posts' });
   }
 };
 
